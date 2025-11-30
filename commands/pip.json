@@ -1,0 +1,328 @@
+{
+  "pip": {
+    "description": "Python Package Installer",
+    "subcommands": {
+      "install": {
+        "syntax": "pip install [options] <package>",
+        "description": "Install packages",
+        "flags": [
+          {
+            "flag": "-r <file>",
+            "description": "Install from requirements file"
+          },
+          {
+            "flag": "--upgrade, -U",
+            "description": "Upgrade package to latest version"
+          },
+          {
+            "flag": "--user",
+            "description": "Install to user directory"
+          },
+          {
+            "flag": "--no-cache-dir",
+            "description": "Disable cache"
+          },
+          {
+            "flag": "-e <path>",
+            "description": "Install package in editable mode (for development)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip install requests",
+            "explanation": "Install requests package"
+          },
+          {
+            "command": "pip install -r requirements.txt",
+            "explanation": "Install all packages from requirements.txt"
+          },
+          {
+            "command": "pip install --upgrade pip",
+            "explanation": "Upgrade pip itself"
+          },
+          {
+            "command": "pip install Flask==2.0.1",
+            "explanation": "Install specific version of Flask"
+          },
+          {
+            "command": "pip install -e .",
+            "explanation": "Install current package in editable mode"
+          }
+        ]
+      },
+      "uninstall": {
+        "syntax": "pip uninstall [options] <package>",
+        "description": "Uninstall packages",
+        "flags": [
+          {
+            "flag": "-y, --yes",
+            "description": "Don't ask for confirmation"
+          },
+          {
+            "flag": "-r <file>",
+            "description": "Uninstall from requirements file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip uninstall requests",
+            "explanation": "Uninstall requests package"
+          },
+          {
+            "command": "pip uninstall -y requests",
+            "explanation": "Uninstall without confirmation"
+          }
+        ]
+      },
+      "list": {
+        "syntax": "pip list [options]",
+        "description": "List installed packages",
+        "flags": [
+          {
+            "flag": "--outdated",
+            "description": "List outdated packages"
+          },
+          {
+            "flag": "--uptodate",
+            "description": "List up-to-date packages"
+          },
+          {
+            "flag": "--format <format>",
+            "description": "Output format (columns, freeze, json)"
+          },
+          {
+            "flag": "--user",
+            "description": "List user packages only"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip list",
+            "explanation": "List all installed packages"
+          },
+          {
+            "command": "pip list --outdated",
+            "explanation": "Show packages that have newer versions available"
+          },
+          {
+            "command": "pip list --format=json",
+            "explanation": "List packages in JSON format"
+          }
+        ]
+      },
+      "show": {
+        "syntax": "pip show <package>",
+        "description": "Show information about installed package",
+        "flags": [
+          {
+            "flag": "--files",
+            "description": "Show installed files"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip show requests",
+            "explanation": "Show details about requests package"
+          },
+          {
+            "command": "pip show --files requests",
+            "explanation": "Show requests package info with file list"
+          }
+        ]
+      },
+      "freeze": {
+        "syntax": "pip freeze [options]",
+        "description": "Output installed packages in requirements format",
+        "flags": [
+          {
+            "flag": "--local",
+            "description": "Only include packages in current virtualenv"
+          },
+          {
+            "flag": "--all",
+            "description": "Include pip, setuptools, etc."
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip freeze",
+            "explanation": "List installed packages in requirements format"
+          },
+          {
+            "command": "pip freeze > requirements.txt",
+            "explanation": "Save current packages to requirements.txt"
+          },
+          {
+            "command": "pip freeze --local",
+            "explanation": "List only virtualenv packages"
+          }
+        ]
+      },
+      "search": {
+        "syntax": "pip search <query>",
+        "description": "Search PyPI for packages (currently disabled on PyPI)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip search django",
+            "explanation": "Search for Django-related packages (Note: currently disabled)"
+          }
+        ]
+      },
+      "check": {
+        "syntax": "pip check",
+        "description": "Verify installed packages have compatible dependencies",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip check",
+            "explanation": "Check for dependency conflicts"
+          }
+        ]
+      },
+      "download": {
+        "syntax": "pip download [options] <package>",
+        "description": "Download packages without installing",
+        "flags": [
+          {
+            "flag": "-d <dir>",
+            "description": "Download to directory"
+          },
+          {
+            "flag": "--no-deps",
+            "description": "Don't download dependencies"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip download requests",
+            "explanation": "Download requests package"
+          },
+          {
+            "command": "pip download -d ./packages requests",
+            "explanation": "Download to specific directory"
+          }
+        ]
+      },
+      "wheel": {
+        "syntax": "pip wheel [options] <package>",
+        "description": "Build wheel archives for packages",
+        "flags": [
+          {
+            "flag": "-w <dir>",
+            "description": "Build wheels into directory"
+          },
+          {
+            "flag": "--no-deps",
+            "description": "Don't build dependencies"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip wheel requests",
+            "explanation": "Build wheel for requests package"
+          },
+          {
+            "command": "pip wheel -w ./wheels -r requirements.txt",
+            "explanation": "Build wheels for all requirements"
+          }
+        ]
+      },
+      "config": {
+        "syntax": "pip config <subcommand>",
+        "description": "Manage pip configuration",
+        "flags": [
+          {
+            "flag": "list",
+            "description": "List configuration"
+          },
+          {
+            "flag": "get <key>",
+            "description": "Get configuration value"
+          },
+          {
+            "flag": "set <key> <value>",
+            "description": "Set configuration value"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip config list",
+            "explanation": "Show all pip configuration"
+          },
+          {
+            "command": "pip config set global.index-url https://pypi.org/simple",
+            "explanation": "Set PyPI index URL"
+          }
+        ]
+      },
+      "cache": {
+        "syntax": "pip cache <subcommand>",
+        "description": "Manage pip cache",
+        "flags": [
+          {
+            "flag": "dir",
+            "description": "Show cache directory"
+          },
+          {
+            "flag": "info",
+            "description": "Show cache information"
+          },
+          {
+            "flag": "list",
+            "description": "List cache contents"
+          },
+          {
+            "flag": "remove",
+            "description": "Remove from cache"
+          },
+          {
+            "flag": "purge",
+            "description": "Clear all cache"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip cache dir",
+            "explanation": "Show cache directory location"
+          },
+          {
+            "command": "pip cache info",
+            "explanation": "Show cache size and location"
+          },
+          {
+            "command": "pip cache purge",
+            "explanation": "Clear all pip cache"
+          }
+        ]
+      },
+      "debug": {
+        "syntax": "pip debug",
+        "description": "Show debugging information",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip debug",
+            "explanation": "Show pip environment information for debugging"
+          }
+        ]
+      },
+      "index": {
+        "syntax": "pip index <subcommand>",
+        "description": "Interact with package index",
+        "flags": [
+          {
+            "flag": "versions <package>",
+            "description": "Show available versions"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip index versions django",
+            "explanation": "Show all available Django versions"
+          }
+        ]
+      }
+    }
+  }
+}

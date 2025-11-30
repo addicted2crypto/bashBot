@@ -1,0 +1,7 @@
+# No external dependencies required for basic functionality
+# BashBot uses only Python standard library
+
+# Optional: For future enhancements
+# colorama>=0.4.6  # Cross-platform colored terminal output (optional, currently using ANSI codes)
+# prompt_toolkit>=3.0.0  # Advanced CLI features like autocomplete (future enhancement)
+# rich>=13.0.0  # Rich text formatting (alternative to current formatter)

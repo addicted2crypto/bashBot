@@ -1,0 +1,645 @@
+{
+  "powershell": {
+    "description": "Windows PowerShell commands for system administration and automation",
+    "subcommands": {
+      "Get-Process": {
+        "syntax": "Get-Process [[-Name] <String[]>] [options]",
+        "description": "Get running processes on local or remote computer",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Get processes by name (supports wildcards)"
+          },
+          {
+            "flag": "-Id <Int32>",
+            "description": "Get process by process ID (PID)"
+          },
+          {
+            "flag": "-ComputerName <String>",
+            "description": "Get processes from remote computer"
+          },
+          {
+            "flag": "| Sort-Object -Property CPU -Descending",
+            "description": "Sort processes by CPU usage"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-Process",
+            "explanation": "List all running processes"
+          },
+          {
+            "command": "Get-Process chrome",
+            "explanation": "Get all Chrome processes"
+          },
+          {
+            "command": "Get-Process -Id 1234",
+            "explanation": "Get process with specific PID"
+          },
+          {
+            "command": "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10",
+            "explanation": "Show top 10 CPU-consuming processes"
+          },
+          {
+            "command": "Get-Process | Where-Object {$_.CPU -gt 100}",
+            "explanation": "Find processes using more than 100 seconds of CPU time"
+          }
+        ]
+      },
+      "Stop-Process": {
+        "syntax": "Stop-Process [-Id] <Int32[]> | [-Name] <String[]> [options]",
+        "description": "Stop (kill) one or more running processes",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Stop processes by name"
+          },
+          {
+            "flag": "-Id <Int32>",
+            "description": "Stop process by PID"
+          },
+          {
+            "flag": "-Force",
+            "description": "Force stop without confirmation"
+          },
+          {
+            "flag": "-PassThru",
+            "description": "Return object representing stopped process"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Stop-Process -Id 1234",
+            "explanation": "Kill process with PID 1234"
+          },
+          {
+            "command": "Stop-Process -Name chrome",
+            "explanation": "Kill all Chrome processes"
+          },
+          {
+            "command": "Stop-Process -Name notepad -Force",
+            "explanation": "Force kill all Notepad processes without confirmation"
+          },
+          {
+            "command": "Get-Process chrome | Stop-Process",
+            "explanation": "Find and kill all Chrome processes using pipeline"
+          }
+        ]
+      },
+      "Get-Service": {
+        "syntax": "Get-Service [[-Name] <String[]>] [options]",
+        "description": "Get Windows services",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Get service by name (supports wildcards)"
+          },
+          {
+            "flag": "-DisplayName <String>",
+            "description": "Get service by display name"
+          },
+          {
+            "flag": "-ComputerName <String>",
+            "description": "Get services from remote computer"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-Service",
+            "explanation": "List all services"
+          },
+          {
+            "command": "Get-Service -Name wuauserv",
+            "explanation": "Get Windows Update service"
+          },
+          {
+            "command": "Get-Service | Where-Object {$_.Status -eq 'Running'}",
+            "explanation": "List only running services"
+          }
+        ]
+      },
+      "Start-Service": {
+        "syntax": "Start-Service [-Name] <String[]> [options]",
+        "description": "Start one or more stopped services",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Service name to start"
+          },
+          {
+            "flag": "-PassThru",
+            "description": "Return service object"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Start-Service -Name wuauserv",
+            "explanation": "Start Windows Update service"
+          },
+          {
+            "command": "Start-Service -Name spooler",
+            "explanation": "Start Print Spooler service"
+          }
+        ]
+      },
+      "Stop-Service": {
+        "syntax": "Stop-Service [-Name] <String[]> [options]",
+        "description": "Stop one or more running services",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Service name to stop"
+          },
+          {
+            "flag": "-Force",
+            "description": "Force stop service"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Stop-Service -Name wuauserv",
+            "explanation": "Stop Windows Update service"
+          },
+          {
+            "command": "Stop-Service -Name spooler -Force",
+            "explanation": "Force stop Print Spooler service"
+          }
+        ]
+      },
+      "Get-ChildItem": {
+        "syntax": "Get-ChildItem [[-Path] <String[]>] [options]",
+        "description": "Get items in directory (like 'ls' or 'dir')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Directory path"
+          },
+          {
+            "flag": "-Recurse",
+            "description": "Get items recursively"
+          },
+          {
+            "flag": "-File",
+            "description": "Get only files"
+          },
+          {
+            "flag": "-Directory",
+            "description": "Get only directories"
+          },
+          {
+            "flag": "-Hidden",
+            "description": "Include hidden files"
+          },
+          {
+            "flag": "-Filter <String>",
+            "description": "Filter by name pattern"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-ChildItem",
+            "explanation": "List items in current directory (alias: ls, dir)"
+          },
+          {
+            "command": "Get-ChildItem -Path C:\\Users -Recurse",
+            "explanation": "List all items in C:\\Users recursively"
+          },
+          {
+            "command": "Get-ChildItem -File -Filter *.txt",
+            "explanation": "List all .txt files in current directory"
+          },
+          {
+            "command": "Get-ChildItem -Directory",
+            "explanation": "List only directories"
+          },
+          {
+            "command": "Get-ChildItem -Recurse -Include *.log",
+            "explanation": "Find all .log files recursively"
+          }
+        ]
+      },
+      "Get-Content": {
+        "syntax": "Get-Content [-Path] <String[]> [options]",
+        "description": "Read file contents (like 'cat')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "File path to read"
+          },
+          {
+            "flag": "-Tail <Int32>",
+            "description": "Get last n lines"
+          },
+          {
+            "flag": "-TotalCount <Int32>",
+            "description": "Get first n lines"
+          },
+          {
+            "flag": "-Wait",
+            "description": "Wait for new content (like 'tail -f')"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-Content file.txt",
+            "explanation": "Read entire file (alias: cat, type)"
+          },
+          {
+            "command": "Get-Content file.txt -Tail 10",
+            "explanation": "Read last 10 lines"
+          },
+          {
+            "command": "Get-Content log.txt -Wait",
+            "explanation": "Monitor log file in real-time"
+          }
+        ]
+      },
+      "Set-Content": {
+        "syntax": "Set-Content [-Path] <String> [-Value] <Object[]>",
+        "description": "Write content to file (overwrites existing)",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "File path to write"
+          },
+          {
+            "flag": "-Value <Object>",
+            "description": "Content to write"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Set-Content -Path file.txt -Value 'Hello World'",
+            "explanation": "Write text to file (overwrites)"
+          },
+          {
+            "command": "'Line 1','Line 2' | Set-Content file.txt",
+            "explanation": "Write multiple lines using pipeline"
+          }
+        ]
+      },
+      "Add-Content": {
+        "syntax": "Add-Content [-Path] <String> [-Value] <Object[]>",
+        "description": "Append content to file",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "File path"
+          },
+          {
+            "flag": "-Value <Object>",
+            "description": "Content to append"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Add-Content -Path log.txt -Value 'New log entry'",
+            "explanation": "Append text to file"
+          }
+        ]
+      },
+      "Select-String": {
+        "syntax": "Select-String [-Pattern] <String> [-Path] <String[]>",
+        "description": "Search for text in files (like 'grep')",
+        "flags": [
+          {
+            "flag": "-Pattern <String>",
+            "description": "Text or regex pattern to search"
+          },
+          {
+            "flag": "-Path <String>",
+            "description": "Files to search"
+          },
+          {
+            "flag": "-Recurse",
+            "description": "Search in subdirectories"
+          },
+          {
+            "flag": "-CaseSensitive",
+            "description": "Make search case-sensitive"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Select-String -Pattern 'error' -Path *.log",
+            "explanation": "Search for 'error' in all .log files"
+          },
+          {
+            "command": "Get-ChildItem -Recurse | Select-String -Pattern 'TODO'",
+            "explanation": "Search for 'TODO' in all files recursively"
+          }
+        ]
+      },
+      "Get-Location": {
+        "syntax": "Get-Location",
+        "description": "Get current directory (like 'pwd')",
+        "flags": [],
+        "examples": [
+          {
+            "command": "Get-Location",
+            "explanation": "Show current directory path (alias: pwd, gl)"
+          }
+        ]
+      },
+      "Set-Location": {
+        "syntax": "Set-Location [-Path] <String>",
+        "description": "Change current directory (like 'cd')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Directory path"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Set-Location C:\\Users",
+            "explanation": "Change to C:\\Users directory (alias: cd, sl)"
+          },
+          {
+            "command": "Set-Location ..",
+            "explanation": "Go up one directory level"
+          }
+        ]
+      },
+      "Copy-Item": {
+        "syntax": "Copy-Item [-Path] <String> [-Destination] <String> [options]",
+        "description": "Copy files or directories (like 'cp')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Source path"
+          },
+          {
+            "flag": "-Destination <String>",
+            "description": "Destination path"
+          },
+          {
+            "flag": "-Recurse",
+            "description": "Copy directories recursively"
+          },
+          {
+            "flag": "-Force",
+            "description": "Overwrite without prompting"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Copy-Item file.txt C:\\Backup\\",
+            "explanation": "Copy file to Backup directory (alias: cp, copy)"
+          },
+          {
+            "command": "Copy-Item C:\\Source C:\\Destination -Recurse",
+            "explanation": "Copy entire directory recursively"
+          }
+        ]
+      },
+      "Move-Item": {
+        "syntax": "Move-Item [-Path] <String> [-Destination] <String>",
+        "description": "Move or rename files/directories (like 'mv')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Source path"
+          },
+          {
+            "flag": "-Destination <String>",
+            "description": "Destination path"
+          },
+          {
+            "flag": "-Force",
+            "description": "Overwrite without prompting"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Move-Item file.txt C:\\Archive\\",
+            "explanation": "Move file to Archive directory (alias: mv, move)"
+          },
+          {
+            "command": "Move-Item oldname.txt newname.txt",
+            "explanation": "Rename file"
+          }
+        ]
+      },
+      "Remove-Item": {
+        "syntax": "Remove-Item [-Path] <String[]> [options]",
+        "description": "Delete files or directories (like 'rm')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Path to delete"
+          },
+          {
+            "flag": "-Recurse",
+            "description": "Delete directories and contents"
+          },
+          {
+            "flag": "-Force",
+            "description": "Force delete without prompting"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Remove-Item file.txt",
+            "explanation": "Delete a file (alias: rm, del)"
+          },
+          {
+            "command": "Remove-Item C:\\TempFolder -Recurse -Force",
+            "explanation": "Delete directory and all contents"
+          },
+          {
+            "command": "Remove-Item *.tmp",
+            "explanation": "Delete all .tmp files"
+          }
+        ]
+      },
+      "New-Item": {
+        "syntax": "New-Item [-Path] <String> [-ItemType] <String>",
+        "description": "Create new files or directories (like 'mkdir', 'touch')",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Path to create"
+          },
+          {
+            "flag": "-ItemType <String>",
+            "description": "Type: File, Directory"
+          },
+          {
+            "flag": "-Force",
+            "description": "Create parent directories if needed"
+          }
+        ],
+        "examples": [
+          {
+            "command": "New-Item -Path C:\\NewFolder -ItemType Directory",
+            "explanation": "Create a new directory (alias: mkdir, md)"
+          },
+          {
+            "command": "New-Item -Path file.txt -ItemType File",
+            "explanation": "Create an empty file"
+          },
+          {
+            "command": "New-Item -Path C:\\Deep\\Path\\Folder -ItemType Directory -Force",
+            "explanation": "Create directory with parent directories"
+          }
+        ]
+      },
+      "Test-Path": {
+        "syntax": "Test-Path [-Path] <String>",
+        "description": "Check if file or directory exists",
+        "flags": [
+          {
+            "flag": "-Path <String>",
+            "description": "Path to test"
+          },
+          {
+            "flag": "-PathType <String>",
+            "description": "Type to test: Leaf (file), Container (directory)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Test-Path C:\\file.txt",
+            "explanation": "Returns True if file exists, False otherwise"
+          },
+          {
+            "command": "if (Test-Path file.txt) { 'File exists' }",
+            "explanation": "Conditional check if file exists"
+          }
+        ]
+      },
+      "Get-ComputerInfo": {
+        "syntax": "Get-ComputerInfo [options]",
+        "description": "Get detailed computer system information",
+        "flags": [
+          {
+            "flag": "-Property <String[]>",
+            "description": "Specific properties to retrieve"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-ComputerInfo",
+            "explanation": "Get all system information"
+          },
+          {
+            "command": "Get-ComputerInfo -Property OsName,OsVersion",
+            "explanation": "Get OS name and version only"
+          }
+        ]
+      },
+      "Get-NetTCPConnection": {
+        "syntax": "Get-NetTCPConnection [options]",
+        "description": "Get TCP network connections (like 'netstat')",
+        "flags": [
+          {
+            "flag": "-State <String>",
+            "description": "Filter by connection state (Listen, Established, etc.)"
+          },
+          {
+            "flag": "-LocalPort <Int32>",
+            "description": "Filter by local port"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-NetTCPConnection",
+            "explanation": "List all TCP connections"
+          },
+          {
+            "command": "Get-NetTCPConnection -State Listen",
+            "explanation": "Show only listening ports"
+          },
+          {
+            "command": "Get-NetTCPConnection -LocalPort 80",
+            "explanation": "Show connections on port 80"
+          }
+        ]
+      },
+      "Invoke-WebRequest": {
+        "syntax": "Invoke-WebRequest [-Uri] <String> [options]",
+        "description": "Make HTTP/HTTPS requests (like 'curl', 'wget')",
+        "flags": [
+          {
+            "flag": "-Uri <String>",
+            "description": "URL to request"
+          },
+          {
+            "flag": "-Method <String>",
+            "description": "HTTP method (GET, POST, etc.)"
+          },
+          {
+            "flag": "-OutFile <String>",
+            "description": "Save response to file"
+          },
+          {
+            "flag": "-Headers <Hashtable>",
+            "description": "Custom headers"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Invoke-WebRequest -Uri https://example.com",
+            "explanation": "Make GET request (alias: curl, wget)"
+          },
+          {
+            "command": "Invoke-WebRequest -Uri https://example.com/file.zip -OutFile file.zip",
+            "explanation": "Download file"
+          },
+          {
+            "command": "Invoke-WebRequest -Uri https://api.example.com -Method POST -Body @{key='value'}",
+            "explanation": "Make POST request with data"
+          }
+        ]
+      },
+      "Get-Help": {
+        "syntax": "Get-Help [[-Name] <String>] [options]",
+        "description": "Get help for PowerShell commands",
+        "flags": [
+          {
+            "flag": "-Name <String>",
+            "description": "Command name to get help for"
+          },
+          {
+            "flag": "-Examples",
+            "description": "Show only examples"
+          },
+          {
+            "flag": "-Full",
+            "description": "Show full help including examples"
+          },
+          {
+            "flag": "-Online",
+            "description": "Open online help in browser"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-Help Get-Process",
+            "explanation": "Get help for Get-Process command (alias: help, man)"
+          },
+          {
+            "command": "Get-Help Get-Process -Examples",
+            "explanation": "Show only examples"
+          },
+          {
+            "command": "Get-Help Get-Process -Online",
+            "explanation": "Open online documentation"
+          }
+        ]
+      },
+      "Clear-Host": {
+        "syntax": "Clear-Host",
+        "description": "Clear the terminal screen (like 'clear', 'cls')",
+        "flags": [],
+        "examples": [
+          {
+            "command": "Clear-Host",
+            "explanation": "Clear terminal (alias: clear, cls)"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,518 @@
+{
+  "docker": {
+    "description": "Container platform for building, shipping, and running applications",
+    "subcommands": {
+      "run": {
+        "syntax": "docker run [options] <image> [command]",
+        "description": "Create and start a new container",
+        "flags": [
+          {
+            "flag": "-d, --detach",
+            "description": "Run container in background"
+          },
+          {
+            "flag": "-it",
+            "description": "Interactive terminal mode"
+          },
+          {
+            "flag": "-p <host>:<container>",
+            "description": "Publish container port to host"
+          },
+          {
+            "flag": "-v <host>:<container>",
+            "description": "Mount volume"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Assign name to container"
+          },
+          {
+            "flag": "--rm",
+            "description": "Automatically remove container when it exits"
+          },
+          {
+            "flag": "-e <key>=<value>",
+            "description": "Set environment variable"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker run nginx",
+            "explanation": "Run nginx container in foreground"
+          },
+          {
+            "command": "docker run -d -p 8080:80 nginx",
+            "explanation": "Run nginx in background, map port 8080 to container port 80"
+          },
+          {
+            "command": "docker run -it ubuntu bash",
+            "explanation": "Run Ubuntu container with interactive bash shell"
+          },
+          {
+            "command": "docker run -d --name myapp -v $(pwd):/app node:16",
+            "explanation": "Run Node.js container with volume mount"
+          },
+          {
+            "command": "docker run --rm -e NODE_ENV=production node:16 node app.js",
+            "explanation": "Run container with environment variable, remove after exit"
+          }
+        ]
+      },
+      "build": {
+        "syntax": "docker build [options] <path>",
+        "description": "Build image from Dockerfile",
+        "flags": [
+          {
+            "flag": "-t, --tag <name:tag>",
+            "description": "Name and optionally tag the image"
+          },
+          {
+            "flag": "-f, --file <path>",
+            "description": "Path to Dockerfile"
+          },
+          {
+            "flag": "--no-cache",
+            "description": "Build without using cache"
+          },
+          {
+            "flag": "--build-arg <key>=<value>",
+            "description": "Set build-time variables"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker build -t myapp:latest .",
+            "explanation": "Build image from current directory Dockerfile"
+          },
+          {
+            "command": "docker build -t myapp:v1.0 -f Dockerfile.prod .",
+            "explanation": "Build using specific Dockerfile"
+          },
+          {
+            "command": "docker build --no-cache -t myapp .",
+            "explanation": "Build without using cache"
+          }
+        ]
+      },
+      "ps": {
+        "syntax": "docker ps [options]",
+        "description": "List containers",
+        "flags": [
+          {
+            "flag": "-a, --all",
+            "description": "Show all containers (default shows running only)"
+          },
+          {
+            "flag": "-q, --quiet",
+            "description": "Only show container IDs"
+          },
+          {
+            "flag": "--filter <key>=<value>",
+            "description": "Filter output"
+          },
+          {
+            "flag": "--format <template>",
+            "description": "Format output using template"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker ps",
+            "explanation": "List running containers"
+          },
+          {
+            "command": "docker ps -a",
+            "explanation": "List all containers (including stopped)"
+          },
+          {
+            "command": "docker ps -q",
+            "explanation": "List only container IDs"
+          }
+        ]
+      },
+      "images": {
+        "syntax": "docker images [options]",
+        "description": "List images",
+        "flags": [
+          {
+            "flag": "-a, --all",
+            "description": "Show all images (including intermediate)"
+          },
+          {
+            "flag": "-q, --quiet",
+            "description": "Only show image IDs"
+          },
+          {
+            "flag": "--filter <key>=<value>",
+            "description": "Filter output"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker images",
+            "explanation": "List all images"
+          },
+          {
+            "command": "docker images -q",
+            "explanation": "List only image IDs"
+          }
+        ]
+      },
+      "pull": {
+        "syntax": "docker pull <image>",
+        "description": "Download image from registry",
+        "flags": [
+          {
+            "flag": "-a, --all-tags",
+            "description": "Download all tagged images"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker pull nginx",
+            "explanation": "Pull latest nginx image"
+          },
+          {
+            "command": "docker pull nginx:1.21",
+            "explanation": "Pull specific nginx version"
+          }
+        ]
+      },
+      "push": {
+        "syntax": "docker push <image>",
+        "description": "Upload image to registry",
+        "flags": [],
+        "examples": [
+          {
+            "command": "docker push myuser/myapp:latest",
+            "explanation": "Push image to Docker Hub"
+          }
+        ]
+      },
+      "start": {
+        "syntax": "docker start <container>",
+        "description": "Start stopped container",
+        "flags": [
+          {
+            "flag": "-a, --attach",
+            "description": "Attach to container output"
+          },
+          {
+            "flag": "-i, --interactive",
+            "description": "Attach container's stdin"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker start mycontainer",
+            "explanation": "Start stopped container"
+          },
+          {
+            "command": "docker start -a mycontainer",
+            "explanation": "Start and attach to container output"
+          }
+        ]
+      },
+      "stop": {
+        "syntax": "docker stop <container>",
+        "description": "Stop running container",
+        "flags": [
+          {
+            "flag": "-t, --time <seconds>",
+            "description": "Seconds to wait before killing"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker stop mycontainer",
+            "explanation": "Stop container gracefully"
+          },
+          {
+            "command": "docker stop $(docker ps -q)",
+            "explanation": "Stop all running containers"
+          }
+        ]
+      },
+      "restart": {
+        "syntax": "docker restart <container>",
+        "description": "Restart container",
+        "flags": [
+          {
+            "flag": "-t, --time <seconds>",
+            "description": "Seconds to wait before killing"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker restart mycontainer",
+            "explanation": "Restart container"
+          }
+        ]
+      },
+      "rm": {
+        "syntax": "docker rm <container>",
+        "description": "Remove container",
+        "flags": [
+          {
+            "flag": "-f, --force",
+            "description": "Force remove running container"
+          },
+          {
+            "flag": "-v, --volumes",
+            "description": "Remove associated volumes"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker rm mycontainer",
+            "explanation": "Remove stopped container"
+          },
+          {
+            "command": "docker rm -f mycontainer",
+            "explanation": "Force remove running container"
+          },
+          {
+            "command": "docker rm $(docker ps -aq)",
+            "explanation": "Remove all stopped containers"
+          }
+        ]
+      },
+      "rmi": {
+        "syntax": "docker rmi <image>",
+        "description": "Remove image",
+        "flags": [
+          {
+            "flag": "-f, --force",
+            "description": "Force removal"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker rmi nginx",
+            "explanation": "Remove nginx image"
+          },
+          {
+            "command": "docker rmi $(docker images -q)",
+            "explanation": "Remove all images"
+          }
+        ]
+      },
+      "exec": {
+        "syntax": "docker exec [options] <container> <command>",
+        "description": "Execute command in running container",
+        "flags": [
+          {
+            "flag": "-it",
+            "description": "Interactive terminal"
+          },
+          {
+            "flag": "-d, --detach",
+            "description": "Run in background"
+          },
+          {
+            "flag": "-u, --user <user>",
+            "description": "Run as specific user"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker exec -it mycontainer bash",
+            "explanation": "Open bash shell in running container"
+          },
+          {
+            "command": "docker exec mycontainer ls /app",
+            "explanation": "Run command in container"
+          }
+        ]
+      },
+      "logs": {
+        "syntax": "docker logs [options] <container>",
+        "description": "View container logs",
+        "flags": [
+          {
+            "flag": "-f, --follow",
+            "description": "Follow log output (live tail)"
+          },
+          {
+            "flag": "--tail <n>",
+            "description": "Show last n lines"
+          },
+          {
+            "flag": "-t, --timestamps",
+            "description": "Show timestamps"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker logs mycontainer",
+            "explanation": "View container logs"
+          },
+          {
+            "command": "docker logs -f mycontainer",
+            "explanation": "Follow logs in real-time"
+          },
+          {
+            "command": "docker logs --tail 100 mycontainer",
+            "explanation": "Show last 100 log lines"
+          }
+        ]
+      },
+      "inspect": {
+        "syntax": "docker inspect <container|image>",
+        "description": "Display detailed information",
+        "flags": [
+          {
+            "flag": "--format <template>",
+            "description": "Format output using template"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker inspect mycontainer",
+            "explanation": "Show detailed container information"
+          },
+          {
+            "command": "docker inspect --format='{{.NetworkSettings.IPAddress}}' mycontainer",
+            "explanation": "Get container IP address"
+          }
+        ]
+      },
+      "compose": {
+        "syntax": "docker compose [command]",
+        "description": "Multi-container Docker applications (Docker Compose V2)",
+        "flags": [
+          {
+            "flag": "up",
+            "description": "Create and start containers"
+          },
+          {
+            "flag": "down",
+            "description": "Stop and remove containers"
+          },
+          {
+            "flag": "-d",
+            "description": "Detached mode (background)"
+          },
+          {
+            "flag": "ps",
+            "description": "List containers"
+          },
+          {
+            "flag": "logs",
+            "description": "View logs"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker compose up",
+            "explanation": "Start services defined in docker-compose.yml"
+          },
+          {
+            "command": "docker compose up -d",
+            "explanation": "Start services in background"
+          },
+          {
+            "command": "docker compose down",
+            "explanation": "Stop and remove containers, networks"
+          },
+          {
+            "command": "docker compose logs -f",
+            "explanation": "Follow logs for all services"
+          }
+        ]
+      },
+      "volume": {
+        "syntax": "docker volume [command]",
+        "description": "Manage Docker volumes",
+        "flags": [
+          {
+            "flag": "create",
+            "description": "Create a volume"
+          },
+          {
+            "flag": "ls",
+            "description": "List volumes"
+          },
+          {
+            "flag": "rm",
+            "description": "Remove volume"
+          },
+          {
+            "flag": "prune",
+            "description": "Remove unused volumes"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker volume ls",
+            "explanation": "List all volumes"
+          },
+          {
+            "command": "docker volume create myvolume",
+            "explanation": "Create a named volume"
+          },
+          {
+            "command": "docker volume prune",
+            "explanation": "Remove unused volumes"
+          }
+        ]
+      },
+      "network": {
+        "syntax": "docker network [command]",
+        "description": "Manage Docker networks",
+        "flags": [
+          {
+            "flag": "create",
+            "description": "Create a network"
+          },
+          {
+            "flag": "ls",
+            "description": "List networks"
+          },
+          {
+            "flag": "rm",
+            "description": "Remove network"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker network ls",
+            "explanation": "List all networks"
+          },
+          {
+            "command": "docker network create mynetwork",
+            "explanation": "Create a custom network"
+          }
+        ]
+      },
+      "system": {
+        "syntax": "docker system [command]",
+        "description": "Manage Docker system",
+        "flags": [
+          {
+            "flag": "df",
+            "description": "Show disk usage"
+          },
+          {
+            "flag": "prune",
+            "description": "Remove unused data"
+          }
+        ],
+        "examples": [
+          {
+            "command": "docker system df",
+            "explanation": "Show Docker disk usage"
+          },
+          {
+            "command": "docker system prune",
+            "explanation": "Remove unused containers, networks, images"
+          },
+          {
+            "command": "docker system prune -a",
+            "explanation": "Remove all unused data (including images)"
+          }
+        ]
+      }
+    }
+  }
+}

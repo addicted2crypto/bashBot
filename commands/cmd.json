@@ -1,0 +1,656 @@
+{
+  "cmd": {
+    "description": "Windows Command Prompt (CMD) commands",
+    "subcommands": {
+      "netstat": {
+        "syntax": "netstat [options]",
+        "description": "Display network connections, routing tables, and network statistics",
+        "flags": [
+          {
+            "flag": "-a",
+            "description": "Display all connections and listening ports"
+          },
+          {
+            "flag": "-n",
+            "description": "Display addresses and port numbers in numerical form"
+          },
+          {
+            "flag": "-o",
+            "description": "Display owning process ID (PID) for each connection"
+          },
+          {
+            "flag": "-b",
+            "description": "Display executable involved in creating connection (requires admin)"
+          },
+          {
+            "flag": "-p <protocol>",
+            "description": "Show connections for specified protocol (TCP, UDP, etc.)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "netstat -ano",
+            "explanation": "Show all connections with PID in numerical format (most common)"
+          },
+          {
+            "command": "netstat -ano | findstr :8080",
+            "explanation": "Find process using port 8080"
+          },
+          {
+            "command": "netstat -ano | findstr LISTENING",
+            "explanation": "Show all listening ports with PIDs"
+          },
+          {
+            "command": "netstat -b",
+            "explanation": "Show executable names for each connection (requires admin)"
+          }
+        ]
+      },
+      "tasklist": {
+        "syntax": "tasklist [options]",
+        "description": "Display list of currently running processes",
+        "flags": [
+          {
+            "flag": "/FI <filter>",
+            "description": "Apply filter to display specific processes"
+          },
+          {
+            "flag": "/V",
+            "description": "Verbose mode - show detailed information"
+          },
+          {
+            "flag": "/SVC",
+            "description": "Show services hosted in each process"
+          },
+          {
+            "flag": "/M <module>",
+            "description": "List tasks using specified DLL module"
+          }
+        ],
+        "examples": [
+          {
+            "command": "tasklist",
+            "explanation": "List all running processes"
+          },
+          {
+            "command": "tasklist /FI \"PID eq 1234\"",
+            "explanation": "Show process with specific PID"
+          },
+          {
+            "command": "tasklist /FI \"IMAGENAME eq chrome.exe\"",
+            "explanation": "Show all Chrome processes"
+          },
+          {
+            "command": "tasklist /FI \"MEMUSAGE gt 500000\"",
+            "explanation": "Show processes using more than 500MB RAM"
+          },
+          {
+            "command": "tasklist /SVC",
+            "explanation": "Show services running in each process"
+          }
+        ]
+      },
+      "taskkill": {
+        "syntax": "taskkill [/PID <pid> | /IM <imagename>] [options]",
+        "description": "Terminate one or more processes",
+        "flags": [
+          {
+            "flag": "/PID <pid>",
+            "description": "Kill process by PID"
+          },
+          {
+            "flag": "/IM <imagename>",
+            "description": "Kill process by image name"
+          },
+          {
+            "flag": "/F",
+            "description": "Force terminate process"
+          },
+          {
+            "flag": "/T",
+            "description": "Kill process and all child processes"
+          }
+        ],
+        "examples": [
+          {
+            "command": "taskkill /PID 1234 /F",
+            "explanation": "Force kill process with PID 1234"
+          },
+          {
+            "command": "taskkill /IM chrome.exe /F",
+            "explanation": "Force kill all Chrome processes"
+          },
+          {
+            "command": "taskkill /IM node.exe /F /T",
+            "explanation": "Kill Node.js and all child processes"
+          }
+        ]
+      },
+      "dir": {
+        "syntax": "dir [path] [options]",
+        "description": "Display list of files and subdirectories",
+        "flags": [
+          {
+            "flag": "/A",
+            "description": "Show files with specified attributes"
+          },
+          {
+            "flag": "/B",
+            "description": "Bare format (names only, no details)"
+          },
+          {
+            "flag": "/S",
+            "description": "Display files in subdirectories"
+          },
+          {
+            "flag": "/O<sort>",
+            "description": "Sort by: N(name), S(size), D(date), E(extension)"
+          },
+          {
+            "flag": "/P",
+            "description": "Pause after each screen"
+          }
+        ],
+        "examples": [
+          {
+            "command": "dir",
+            "explanation": "List files in current directory"
+          },
+          {
+            "command": "dir /S",
+            "explanation": "List files recursively in subdirectories"
+          },
+          {
+            "command": "dir *.txt /B",
+            "explanation": "List only .txt filenames"
+          },
+          {
+            "command": "dir /O-D",
+            "explanation": "Sort by date (newest first)"
+          }
+        ]
+      },
+      "cd": {
+        "syntax": "cd [path]",
+        "description": "Change current directory",
+        "flags": [
+          {
+            "flag": "/D",
+            "description": "Change drive and directory"
+          },
+          {
+            "flag": "..",
+            "description": "Go up one directory level"
+          }
+        ],
+        "examples": [
+          {
+            "command": "cd C:\\Users",
+            "explanation": "Change to Users directory"
+          },
+          {
+            "command": "cd ..",
+            "explanation": "Go up one directory"
+          },
+          {
+            "command": "cd /D D:\\Projects",
+            "explanation": "Change to D: drive and Projects folder"
+          }
+        ]
+      },
+      "copy": {
+        "syntax": "copy [source] [destination] [options]",
+        "description": "Copy one or more files",
+        "flags": [
+          {
+            "flag": "/Y",
+            "description": "Suppress prompt to confirm overwrite"
+          },
+          {
+            "flag": "/V",
+            "description": "Verify copied files"
+          },
+          {
+            "flag": "/A",
+            "description": "Copy as ASCII text"
+          },
+          {
+            "flag": "/B",
+            "description": "Copy as binary"
+          }
+        ],
+        "examples": [
+          {
+            "command": "copy file.txt C:\\Backup\\",
+            "explanation": "Copy file to Backup directory"
+          },
+          {
+            "command": "copy *.txt D:\\Archive\\ /Y",
+            "explanation": "Copy all .txt files without prompting"
+          }
+        ]
+      },
+      "xcopy": {
+        "syntax": "xcopy [source] [destination] [options]",
+        "description": "Copy files and directory trees",
+        "flags": [
+          {
+            "flag": "/E",
+            "description": "Copy directories and subdirectories (including empty)"
+          },
+          {
+            "flag": "/I",
+            "description": "If destination doesn't exist, assume it's a directory"
+          },
+          {
+            "flag": "/Y",
+            "description": "Suppress prompt to confirm overwrite"
+          },
+          {
+            "flag": "/H",
+            "description": "Copy hidden and system files"
+          },
+          {
+            "flag": "/S",
+            "description": "Copy directories and subdirectories (excluding empty)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "xcopy C:\\Source D:\\Backup\\ /E /I /Y",
+            "explanation": "Copy entire directory tree without prompting"
+          },
+          {
+            "command": "xcopy *.doc D:\\Docs\\ /S",
+            "explanation": "Copy all .doc files including subdirectories"
+          }
+        ]
+      },
+      "del": {
+        "syntax": "del [file] [options]",
+        "description": "Delete one or more files",
+        "flags": [
+          {
+            "flag": "/P",
+            "description": "Prompt for confirmation before deleting"
+          },
+          {
+            "flag": "/F",
+            "description": "Force delete read-only files"
+          },
+          {
+            "flag": "/S",
+            "description": "Delete from subdirectories"
+          },
+          {
+            "flag": "/Q",
+            "description": "Quiet mode - don't ask for confirmation"
+          }
+        ],
+        "examples": [
+          {
+            "command": "del file.txt",
+            "explanation": "Delete file.txt"
+          },
+          {
+            "command": "del *.tmp /S /Q",
+            "explanation": "Delete all .tmp files in current dir and subdirs (quiet)"
+          },
+          {
+            "command": "del /F /Q C:\\Temp\\*",
+            "explanation": "Force delete all files in Temp folder"
+          }
+        ]
+      },
+      "mkdir": {
+        "syntax": "mkdir [path]",
+        "description": "Create a new directory (alias: md)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "mkdir NewFolder",
+            "explanation": "Create NewFolder in current directory"
+          },
+          {
+            "command": "mkdir C:\\Projects\\MyApp",
+            "explanation": "Create directory with full path"
+          },
+          {
+            "command": "mkdir Folder1 Folder2 Folder3",
+            "explanation": "Create multiple directories at once"
+          }
+        ]
+      },
+      "rmdir": {
+        "syntax": "rmdir [path] [options]",
+        "description": "Remove a directory (alias: rd)",
+        "flags": [
+          {
+            "flag": "/S",
+            "description": "Remove directory and all contents"
+          },
+          {
+            "flag": "/Q",
+            "description": "Quiet mode - don't ask for confirmation"
+          }
+        ],
+        "examples": [
+          {
+            "command": "rmdir EmptyFolder",
+            "explanation": "Remove empty directory"
+          },
+          {
+            "command": "rmdir /S /Q C:\\OldProject",
+            "explanation": "Delete directory and all contents without prompting"
+          }
+        ]
+      },
+      "ipconfig": {
+        "syntax": "ipconfig [options]",
+        "description": "Display network configuration information",
+        "flags": [
+          {
+            "flag": "/all",
+            "description": "Display detailed configuration information"
+          },
+          {
+            "flag": "/release",
+            "description": "Release DHCP IP address"
+          },
+          {
+            "flag": "/renew",
+            "description": "Renew DHCP IP address"
+          },
+          {
+            "flag": "/flushdns",
+            "description": "Purge DNS resolver cache"
+          },
+          {
+            "flag": "/displaydns",
+            "description": "Display DNS resolver cache"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ipconfig",
+            "explanation": "Show basic IP configuration"
+          },
+          {
+            "command": "ipconfig /all",
+            "explanation": "Show detailed network information"
+          },
+          {
+            "command": "ipconfig /flushdns",
+            "explanation": "Clear DNS cache"
+          },
+          {
+            "command": "ipconfig /release && ipconfig /renew",
+            "explanation": "Release and renew IP address"
+          }
+        ]
+      },
+      "ping": {
+        "syntax": "ping [host] [options]",
+        "description": "Test network connectivity to a host",
+        "flags": [
+          {
+            "flag": "-t",
+            "description": "Ping continuously until stopped (Ctrl+C)"
+          },
+          {
+            "flag": "-n <count>",
+            "description": "Number of echo requests to send"
+          },
+          {
+            "flag": "-l <size>",
+            "description": "Send buffer size in bytes"
+          },
+          {
+            "flag": "-w <timeout>",
+            "description": "Timeout in milliseconds"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ping google.com",
+            "explanation": "Ping Google (4 packets by default)"
+          },
+          {
+            "command": "ping -t 192.168.1.1",
+            "explanation": "Ping router continuously"
+          },
+          {
+            "command": "ping -n 10 example.com",
+            "explanation": "Send 10 ping packets"
+          }
+        ]
+      },
+      "tracert": {
+        "syntax": "tracert [host] [options]",
+        "description": "Trace route to destination host",
+        "flags": [
+          {
+            "flag": "-d",
+            "description": "Don't resolve addresses to hostnames"
+          },
+          {
+            "flag": "-h <max_hops>",
+            "description": "Maximum hops to search for target"
+          }
+        ],
+        "examples": [
+          {
+            "command": "tracert google.com",
+            "explanation": "Trace route to Google servers"
+          },
+          {
+            "command": "tracert -d 8.8.8.8",
+            "explanation": "Trace route without DNS resolution (faster)"
+          }
+        ]
+      },
+      "findstr": {
+        "syntax": "findstr [options] \"pattern\" [file]",
+        "description": "Search for text patterns in files (like grep)",
+        "flags": [
+          {
+            "flag": "/I",
+            "description": "Case-insensitive search"
+          },
+          {
+            "flag": "/N",
+            "description": "Print line numbers"
+          },
+          {
+            "flag": "/S",
+            "description": "Search in subdirectories"
+          },
+          {
+            "flag": "/R",
+            "description": "Use regular expressions"
+          },
+          {
+            "flag": "/C:<string>",
+            "description": "Use literal string (exact match)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "findstr \"error\" log.txt",
+            "explanation": "Find 'error' in log.txt"
+          },
+          {
+            "command": "findstr /I /N \"warning\" *.log",
+            "explanation": "Case-insensitive search with line numbers in all .log files"
+          },
+          {
+            "command": "findstr /S \"TODO\" *.js",
+            "explanation": "Search for 'TODO' in all .js files recursively"
+          }
+        ]
+      },
+      "type": {
+        "syntax": "type [file]",
+        "description": "Display contents of a text file (like cat)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "type file.txt",
+            "explanation": "Display file contents"
+          },
+          {
+            "command": "type file1.txt file2.txt",
+            "explanation": "Display multiple files"
+          }
+        ]
+      },
+      "cls": {
+        "syntax": "cls",
+        "description": "Clear the terminal screen",
+        "flags": [],
+        "examples": [
+          {
+            "command": "cls",
+            "explanation": "Clear the screen"
+          }
+        ]
+      },
+      "echo": {
+        "syntax": "echo [message]",
+        "description": "Display message or toggle command echoing",
+        "flags": [
+          {
+            "flag": "on",
+            "description": "Turn command echoing on"
+          },
+          {
+            "flag": "off",
+            "description": "Turn command echoing off"
+          }
+        ],
+        "examples": [
+          {
+            "command": "echo Hello World",
+            "explanation": "Print 'Hello World'"
+          },
+          {
+            "command": "echo %PATH%",
+            "explanation": "Display PATH environment variable"
+          },
+          {
+            "command": "echo. > newfile.txt",
+            "explanation": "Create empty file"
+          }
+        ]
+      },
+      "set": {
+        "syntax": "set [variable=[value]]",
+        "description": "Display, set, or remove environment variables",
+        "flags": [
+          {
+            "flag": "/A",
+            "description": "Set variable to arithmetic expression"
+          },
+          {
+            "flag": "/P",
+            "description": "Prompt user for input"
+          }
+        ],
+        "examples": [
+          {
+            "command": "set",
+            "explanation": "Display all environment variables"
+          },
+          {
+            "command": "set PATH",
+            "explanation": "Display PATH variable"
+          },
+          {
+            "command": "set MYVAR=Hello",
+            "explanation": "Set custom environment variable"
+          }
+        ]
+      },
+      "where": {
+        "syntax": "where [file]",
+        "description": "Locate and display files in current directory and PATH",
+        "flags": [
+          {
+            "flag": "/R <dir>",
+            "description": "Recursively search from specified directory"
+          }
+        ],
+        "examples": [
+          {
+            "command": "where python",
+            "explanation": "Find Python executable in PATH"
+          },
+          {
+            "command": "where /R C:\\ *.dll",
+            "explanation": "Find all .dll files on C: drive"
+          }
+        ]
+      },
+      "systeminfo": {
+        "syntax": "systeminfo [options]",
+        "description": "Display detailed system configuration information",
+        "flags": [
+          {
+            "flag": "/FO <format>",
+            "description": "Output format: TABLE, LIST, CSV"
+          }
+        ],
+        "examples": [
+          {
+            "command": "systeminfo",
+            "explanation": "Display detailed system information"
+          },
+          {
+            "command": "systeminfo | findstr /C:\"OS Name\" /C:\"OS Version\"",
+            "explanation": "Show only OS name and version"
+          }
+        ]
+      },
+      "sc": {
+        "syntax": "sc [command] [service_name]",
+        "description": "Service Control - manage Windows services",
+        "flags": [
+          {
+            "flag": "query",
+            "description": "Query service status"
+          },
+          {
+            "flag": "start",
+            "description": "Start a service"
+          },
+          {
+            "flag": "stop",
+            "description": "Stop a service"
+          },
+          {
+            "flag": "config",
+            "description": "Configure service"
+          }
+        ],
+        "examples": [
+          {
+            "command": "sc query",
+            "explanation": "List all services and their status"
+          },
+          {
+            "command": "sc query wuauserv",
+            "explanation": "Query Windows Update service status"
+          },
+          {
+            "command": "sc start wuauserv",
+            "explanation": "Start Windows Update service"
+          },
+          {
+            "command": "sc stop wuauserv",
+            "explanation": "Stop Windows Update service"
+          }
+        ]
+      }
+    }
+  }
+}

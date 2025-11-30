@@ -1,0 +1,914 @@
+{
+  "linux": {
+    "description": "Linux/Ubuntu bash commands for system administration and file operations",
+    "subcommands": {
+      "ls": {
+        "syntax": "ls [options] [path]",
+        "description": "List directory contents",
+        "flags": [
+          {
+            "flag": "-l",
+            "description": "Long format with details"
+          },
+          {
+            "flag": "-a",
+            "description": "Show hidden files (starting with .)"
+          },
+          {
+            "flag": "-h",
+            "description": "Human-readable file sizes"
+          },
+          {
+            "flag": "-R",
+            "description": "Recursive listing"
+          },
+          {
+            "flag": "-t",
+            "description": "Sort by modification time"
+          },
+          {
+            "flag": "-S",
+            "description": "Sort by file size"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ls",
+            "explanation": "List files in current directory"
+          },
+          {
+            "command": "ls -lah",
+            "explanation": "Long format, all files, human-readable sizes"
+          },
+          {
+            "command": "ls -lt",
+            "explanation": "List files sorted by modification time"
+          },
+          {
+            "command": "ls -R",
+            "explanation": "Recursively list all subdirectories"
+          }
+        ]
+      },
+      "cd": {
+        "syntax": "cd [directory]",
+        "description": "Change current directory",
+        "flags": [
+          {
+            "flag": "-",
+            "description": "Go to previous directory"
+          },
+          {
+            "flag": "~",
+            "description": "Go to home directory"
+          },
+          {
+            "flag": "..",
+            "description": "Go up one directory level"
+          }
+        ],
+        "examples": [
+          {
+            "command": "cd /var/log",
+            "explanation": "Change to /var/log directory"
+          },
+          {
+            "command": "cd ~",
+            "explanation": "Go to home directory"
+          },
+          {
+            "command": "cd ..",
+            "explanation": "Go up one directory"
+          },
+          {
+            "command": "cd -",
+            "explanation": "Return to previous directory"
+          }
+        ]
+      },
+      "pwd": {
+        "syntax": "pwd",
+        "description": "Print working directory (current path)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pwd",
+            "explanation": "Show current directory path"
+          }
+        ]
+      },
+      "cat": {
+        "syntax": "cat [options] [file...]",
+        "description": "Concatenate and display file contents",
+        "flags": [
+          {
+            "flag": "-n",
+            "description": "Number all output lines"
+          },
+          {
+            "flag": "-b",
+            "description": "Number non-empty lines"
+          },
+          {
+            "flag": "-A",
+            "description": "Show all characters including non-printing"
+          }
+        ],
+        "examples": [
+          {
+            "command": "cat file.txt",
+            "explanation": "Display file contents"
+          },
+          {
+            "command": "cat file1.txt file2.txt",
+            "explanation": "Concatenate and display multiple files"
+          },
+          {
+            "command": "cat -n file.txt",
+            "explanation": "Display with line numbers"
+          },
+          {
+            "command": "cat file.txt | grep error",
+            "explanation": "Display file and filter for 'error'"
+          }
+        ]
+      },
+      "grep": {
+        "syntax": "grep [options] pattern [file...]",
+        "description": "Search for patterns in files",
+        "flags": [
+          {
+            "flag": "-i",
+            "description": "Case-insensitive search"
+          },
+          {
+            "flag": "-r, -R",
+            "description": "Recursive search in directories"
+          },
+          {
+            "flag": "-n",
+            "description": "Show line numbers"
+          },
+          {
+            "flag": "-v",
+            "description": "Invert match (show non-matching lines)"
+          },
+          {
+            "flag": "-c",
+            "description": "Count matching lines"
+          },
+          {
+            "flag": "-A <n>",
+            "description": "Show n lines after match"
+          },
+          {
+            "flag": "-B <n>",
+            "description": "Show n lines before match"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep \"error\" log.txt",
+            "explanation": "Search for 'error' in log.txt"
+          },
+          {
+            "command": "grep -i \"warning\" *.log",
+            "explanation": "Case-insensitive search in all .log files"
+          },
+          {
+            "command": "grep -rn \"TODO\" .",
+            "explanation": "Recursively search for 'TODO' with line numbers"
+          },
+          {
+            "command": "grep -v \"debug\" log.txt",
+            "explanation": "Show lines NOT containing 'debug'"
+          },
+          {
+            "command": "ps aux | grep python",
+            "explanation": "Find Python processes"
+          }
+        ]
+      },
+      "find": {
+        "syntax": "find [path] [options] [expression]",
+        "description": "Search for files and directories",
+        "flags": [
+          {
+            "flag": "-name <pattern>",
+            "description": "Search by name (case-sensitive)"
+          },
+          {
+            "flag": "-iname <pattern>",
+            "description": "Search by name (case-insensitive)"
+          },
+          {
+            "flag": "-type f",
+            "description": "Find only files"
+          },
+          {
+            "flag": "-type d",
+            "description": "Find only directories"
+          },
+          {
+            "flag": "-mtime <n>",
+            "description": "Modified n days ago"
+          },
+          {
+            "flag": "-size <n>",
+            "description": "Find by file size"
+          },
+          {
+            "flag": "-exec <cmd> {} \\;",
+            "description": "Execute command on found files"
+          }
+        ],
+        "examples": [
+          {
+            "command": "find . -name \"*.txt\"",
+            "explanation": "Find all .txt files in current directory and subdirs"
+          },
+          {
+            "command": "find /var/log -name \"*.log\" -mtime -7",
+            "explanation": "Find .log files modified in last 7 days"
+          },
+          {
+            "command": "find . -type f -size +100M",
+            "explanation": "Find files larger than 100MB"
+          },
+          {
+            "command": "find . -name \"*.tmp\" -delete",
+            "explanation": "Find and delete all .tmp files"
+          }
+        ]
+      },
+      "ps": {
+        "syntax": "ps [options]",
+        "description": "Display information about active processes",
+        "flags": [
+          {
+            "flag": "aux",
+            "description": "Show all processes for all users with details"
+          },
+          {
+            "flag": "-ef",
+            "description": "Full format listing of all processes"
+          },
+          {
+            "flag": "-u <user>",
+            "description": "Show processes for specific user"
+          },
+          {
+            "flag": "--sort <column>",
+            "description": "Sort by column (e.g., -%mem, -%cpu)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ps aux",
+            "explanation": "Show all running processes with details"
+          },
+          {
+            "command": "ps aux | grep python",
+            "explanation": "Find all Python processes"
+          },
+          {
+            "command": "ps aux --sort=-%mem | head -10",
+            "explanation": "Show top 10 memory-consuming processes"
+          },
+          {
+            "command": "ps -u username",
+            "explanation": "Show processes for specific user"
+          }
+        ]
+      },
+      "kill": {
+        "syntax": "kill [signal] <pid>",
+        "description": "Send signal to a process (terminate by default)",
+        "flags": [
+          {
+            "flag": "-9 (SIGKILL)",
+            "description": "Force kill process immediately"
+          },
+          {
+            "flag": "-15 (SIGTERM)",
+            "description": "Gracefully terminate process (default)"
+          },
+          {
+            "flag": "-1 (SIGHUP)",
+            "description": "Hang up signal"
+          },
+          {
+            "flag": "-l",
+            "description": "List all signal names"
+          }
+        ],
+        "examples": [
+          {
+            "command": "kill 1234",
+            "explanation": "Gracefully terminate process with PID 1234"
+          },
+          {
+            "command": "kill -9 1234",
+            "explanation": "Force kill process immediately"
+          },
+          {
+            "command": "kill -l",
+            "explanation": "List all available signals"
+          }
+        ]
+      },
+      "killall": {
+        "syntax": "killall [options] <process_name>",
+        "description": "Kill processes by name",
+        "flags": [
+          {
+            "flag": "-9",
+            "description": "Force kill"
+          },
+          {
+            "flag": "-i",
+            "description": "Interactive mode (ask before killing)"
+          },
+          {
+            "flag": "-u <user>",
+            "description": "Kill only processes owned by user"
+          }
+        ],
+        "examples": [
+          {
+            "command": "killall chrome",
+            "explanation": "Kill all Chrome processes"
+          },
+          {
+            "command": "killall -9 python",
+            "explanation": "Force kill all Python processes"
+          }
+        ]
+      },
+      "top": {
+        "syntax": "top [options]",
+        "description": "Display real-time process information",
+        "flags": [
+          {
+            "flag": "-u <user>",
+            "description": "Show processes for specific user"
+          },
+          {
+            "flag": "-p <pid>",
+            "description": "Monitor specific PID"
+          },
+          {
+            "flag": "-d <seconds>",
+            "description": "Delay between updates"
+          }
+        ],
+        "examples": [
+          {
+            "command": "top",
+            "explanation": "Display live process information (press 'q' to quit)"
+          },
+          {
+            "command": "top -u username",
+            "explanation": "Show processes for specific user"
+          }
+        ]
+      },
+      "htop": {
+        "syntax": "htop [options]",
+        "description": "Interactive process viewer (better than top)",
+        "flags": [
+          {
+            "flag": "-u <user>",
+            "description": "Show processes for specific user"
+          },
+          {
+            "flag": "-d <delay>",
+            "description": "Delay between updates in tenths of seconds"
+          }
+        ],
+        "examples": [
+          {
+            "command": "htop",
+            "explanation": "Launch interactive process viewer"
+          },
+          {
+            "command": "htop -u username",
+            "explanation": "Show processes for specific user"
+          }
+        ]
+      },
+      "chmod": {
+        "syntax": "chmod [options] mode file",
+        "description": "Change file permissions",
+        "flags": [
+          {
+            "flag": "-R",
+            "description": "Recursive - apply to directories and contents"
+          },
+          {
+            "flag": "+x",
+            "description": "Add execute permission"
+          },
+          {
+            "flag": "755",
+            "description": "rwxr-xr-x (owner: all, group/others: read+execute)"
+          },
+          {
+            "flag": "644",
+            "description": "rw-r--r-- (owner: read+write, others: read)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "chmod +x script.sh",
+            "explanation": "Make script executable"
+          },
+          {
+            "command": "chmod 755 file.sh",
+            "explanation": "Set permissions to rwxr-xr-x"
+          },
+          {
+            "command": "chmod -R 644 directory/",
+            "explanation": "Recursively set permissions to rw-r--r--"
+          }
+        ]
+      },
+      "chown": {
+        "syntax": "chown [options] user[:group] file",
+        "description": "Change file owner and group",
+        "flags": [
+          {
+            "flag": "-R",
+            "description": "Recursive - apply to directories and contents"
+          }
+        ],
+        "examples": [
+          {
+            "command": "chown user file.txt",
+            "explanation": "Change file owner to 'user'"
+          },
+          {
+            "command": "chown user:group file.txt",
+            "explanation": "Change owner to 'user' and group to 'group'"
+          },
+          {
+            "command": "chown -R www-data:www-data /var/www",
+            "explanation": "Recursively change ownership of web directory"
+          }
+        ]
+      },
+      "cp": {
+        "syntax": "cp [options] source destination",
+        "description": "Copy files and directories",
+        "flags": [
+          {
+            "flag": "-r, -R",
+            "description": "Recursive - copy directories"
+          },
+          {
+            "flag": "-i",
+            "description": "Interactive - prompt before overwrite"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose - show files being copied"
+          },
+          {
+            "flag": "-p",
+            "description": "Preserve permissions, ownership, timestamps"
+          }
+        ],
+        "examples": [
+          {
+            "command": "cp file.txt backup.txt",
+            "explanation": "Copy file"
+          },
+          {
+            "command": "cp -r source/ destination/",
+            "explanation": "Recursively copy directory"
+          },
+          {
+            "command": "cp -v *.txt ~/backup/",
+            "explanation": "Copy all .txt files with verbose output"
+          }
+        ]
+      },
+      "mv": {
+        "syntax": "mv [options] source destination",
+        "description": "Move or rename files and directories",
+        "flags": [
+          {
+            "flag": "-i",
+            "description": "Interactive - prompt before overwrite"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose - show files being moved"
+          },
+          {
+            "flag": "-n",
+            "description": "No clobber - don't overwrite existing files"
+          }
+        ],
+        "examples": [
+          {
+            "command": "mv file.txt newname.txt",
+            "explanation": "Rename file"
+          },
+          {
+            "command": "mv file.txt ~/Documents/",
+            "explanation": "Move file to Documents"
+          },
+          {
+            "command": "mv -v *.log /var/log/",
+            "explanation": "Move all .log files with verbose output"
+          }
+        ]
+      },
+      "rm": {
+        "syntax": "rm [options] file...",
+        "description": "Remove files or directories",
+        "flags": [
+          {
+            "flag": "-r, -R",
+            "description": "Recursive - remove directories"
+          },
+          {
+            "flag": "-f",
+            "description": "Force - don't prompt, ignore errors"
+          },
+          {
+            "flag": "-i",
+            "description": "Interactive - prompt before each removal"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose - show files being removed"
+          }
+        ],
+        "examples": [
+          {
+            "command": "rm file.txt",
+            "explanation": "Delete file"
+          },
+          {
+            "command": "rm -rf directory/",
+            "explanation": "Force delete directory and contents (BE CAREFUL!)"
+          },
+          {
+            "command": "rm -i *.tmp",
+            "explanation": "Delete all .tmp files with confirmation"
+          }
+        ]
+      },
+      "mkdir": {
+        "syntax": "mkdir [options] directory...",
+        "description": "Create directories",
+        "flags": [
+          {
+            "flag": "-p",
+            "description": "Create parent directories as needed"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose - print message for each directory created"
+          }
+        ],
+        "examples": [
+          {
+            "command": "mkdir newfolder",
+            "explanation": "Create directory"
+          },
+          {
+            "command": "mkdir -p path/to/deep/directory",
+            "explanation": "Create nested directories"
+          },
+          {
+            "command": "mkdir dir1 dir2 dir3",
+            "explanation": "Create multiple directories"
+          }
+        ]
+      },
+      "touch": {
+        "syntax": "touch [options] file...",
+        "description": "Create empty file or update timestamp",
+        "flags": [
+          {
+            "flag": "-c",
+            "description": "Don't create file if it doesn't exist"
+          },
+          {
+            "flag": "-t <timestamp>",
+            "description": "Use specific timestamp"
+          }
+        ],
+        "examples": [
+          {
+            "command": "touch file.txt",
+            "explanation": "Create empty file or update timestamp"
+          },
+          {
+            "command": "touch file1.txt file2.txt file3.txt",
+            "explanation": "Create multiple files"
+          }
+        ]
+      },
+      "df": {
+        "syntax": "df [options]",
+        "description": "Display disk space usage",
+        "flags": [
+          {
+            "flag": "-h",
+            "description": "Human-readable sizes"
+          },
+          {
+            "flag": "-T",
+            "description": "Show filesystem type"
+          },
+          {
+            "flag": "-t <type>",
+            "description": "Show only specific filesystem type"
+          }
+        ],
+        "examples": [
+          {
+            "command": "df -h",
+            "explanation": "Show disk usage in human-readable format"
+          },
+          {
+            "command": "df -hT",
+            "explanation": "Show disk usage with filesystem types"
+          }
+        ]
+      },
+      "du": {
+        "syntax": "du [options] [file/directory]",
+        "description": "Estimate file and directory space usage",
+        "flags": [
+          {
+            "flag": "-h",
+            "description": "Human-readable sizes"
+          },
+          {
+            "flag": "-s",
+            "description": "Summary - show total for directory only"
+          },
+          {
+            "flag": "-a",
+            "description": "Show size of all files, not just directories"
+          },
+          {
+            "flag": "--max-depth=<n>",
+            "description": "Limit depth of directory tree"
+          }
+        ],
+        "examples": [
+          {
+            "command": "du -sh *",
+            "explanation": "Show size of each item in current directory"
+          },
+          {
+            "command": "du -h --max-depth=1",
+            "explanation": "Show sizes of subdirectories (1 level deep)"
+          },
+          {
+            "command": "du -ah | sort -rh | head -20",
+            "explanation": "Show 20 largest files/directories"
+          }
+        ]
+      },
+      "tar": {
+        "syntax": "tar [options] archive file...",
+        "description": "Create and extract archive files",
+        "flags": [
+          {
+            "flag": "-c",
+            "description": "Create archive"
+          },
+          {
+            "flag": "-x",
+            "description": "Extract archive"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose - list files processed"
+          },
+          {
+            "flag": "-f <file>",
+            "description": "Specify archive filename"
+          },
+          {
+            "flag": "-z",
+            "description": "Compress with gzip (.tar.gz)"
+          },
+          {
+            "flag": "-j",
+            "description": "Compress with bzip2 (.tar.bz2)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "tar -czf archive.tar.gz directory/",
+            "explanation": "Create compressed tar.gz archive"
+          },
+          {
+            "command": "tar -xzf archive.tar.gz",
+            "explanation": "Extract tar.gz archive"
+          },
+          {
+            "command": "tar -xzf archive.tar.gz -C /destination/",
+            "explanation": "Extract to specific directory"
+          },
+          {
+            "command": "tar -tzf archive.tar.gz",
+            "explanation": "List contents without extracting"
+          }
+        ]
+      },
+      "wget": {
+        "syntax": "wget [options] url",
+        "description": "Download files from the web",
+        "flags": [
+          {
+            "flag": "-O <file>",
+            "description": "Save as specific filename"
+          },
+          {
+            "flag": "-c",
+            "description": "Continue partial download"
+          },
+          {
+            "flag": "-b",
+            "description": "Background download"
+          },
+          {
+            "flag": "-r",
+            "description": "Recursive download"
+          }
+        ],
+        "examples": [
+          {
+            "command": "wget https://example.com/file.zip",
+            "explanation": "Download file"
+          },
+          {
+            "command": "wget -O custom-name.zip https://example.com/file.zip",
+            "explanation": "Download and save with custom name"
+          },
+          {
+            "command": "wget -c https://example.com/large-file.iso",
+            "explanation": "Resume partial download"
+          }
+        ]
+      },
+      "curl": {
+        "syntax": "curl [options] url",
+        "description": "Transfer data with URLs (HTTP, FTP, etc.)",
+        "flags": [
+          {
+            "flag": "-O",
+            "description": "Save with remote filename"
+          },
+          {
+            "flag": "-o <file>",
+            "description": "Save as specific filename"
+          },
+          {
+            "flag": "-X <method>",
+            "description": "HTTP method (GET, POST, PUT, DELETE)"
+          },
+          {
+            "flag": "-H <header>",
+            "description": "Add custom header"
+          },
+          {
+            "flag": "-d <data>",
+            "description": "Send POST data"
+          },
+          {
+            "flag": "-i",
+            "description": "Include response headers"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl https://api.example.com",
+            "explanation": "Make GET request"
+          },
+          {
+            "command": "curl -O https://example.com/file.zip",
+            "explanation": "Download file with original name"
+          },
+          {
+            "command": "curl -X POST -d '{\"key\":\"value\"}' -H 'Content-Type: application/json' https://api.example.com",
+            "explanation": "Make POST request with JSON data"
+          },
+          {
+            "command": "curl -i https://example.com",
+            "explanation": "Show response headers"
+          }
+        ]
+      },
+      "systemctl": {
+        "syntax": "systemctl [command] [service]",
+        "description": "Control systemd services",
+        "flags": [
+          {
+            "flag": "start",
+            "description": "Start service"
+          },
+          {
+            "flag": "stop",
+            "description": "Stop service"
+          },
+          {
+            "flag": "restart",
+            "description": "Restart service"
+          },
+          {
+            "flag": "status",
+            "description": "Show service status"
+          },
+          {
+            "flag": "enable",
+            "description": "Enable service at boot"
+          },
+          {
+            "flag": "disable",
+            "description": "Disable service at boot"
+          }
+        ],
+        "examples": [
+          {
+            "command": "systemctl status nginx",
+            "explanation": "Check Nginx service status"
+          },
+          {
+            "command": "systemctl start nginx",
+            "explanation": "Start Nginx service"
+          },
+          {
+            "command": "systemctl restart apache2",
+            "explanation": "Restart Apache service"
+          },
+          {
+            "command": "systemctl enable docker",
+            "explanation": "Enable Docker to start at boot"
+          }
+        ]
+      },
+      "apt": {
+        "syntax": "apt [command] [package]",
+        "description": "Package manager for Debian/Ubuntu",
+        "flags": [
+          {
+            "flag": "update",
+            "description": "Update package list"
+          },
+          {
+            "flag": "upgrade",
+            "description": "Upgrade installed packages"
+          },
+          {
+            "flag": "install",
+            "description": "Install package"
+          },
+          {
+            "flag": "remove",
+            "description": "Remove package"
+          },
+          {
+            "flag": "search",
+            "description": "Search for package"
+          },
+          {
+            "flag": "autoremove",
+            "description": "Remove unnecessary packages"
+          }
+        ],
+        "examples": [
+          {
+            "command": "sudo apt update",
+            "explanation": "Update package lists"
+          },
+          {
+            "command": "sudo apt upgrade",
+            "explanation": "Upgrade all packages"
+          },
+          {
+            "command": "sudo apt install nginx",
+            "explanation": "Install Nginx"
+          },
+          {
+            "command": "sudo apt remove nginx",
+            "explanation": "Remove Nginx"
+          },
+          {
+            "command": "apt search python",
+            "explanation": "Search for Python packages"
+          }
+        ]
+      }
+    }
+  }
+}

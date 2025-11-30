@@ -1,0 +1,378 @@
+{
+  "venv": {
+    "description": "Python virtual environment management (venv) - Cross-platform",
+    "subcommands": {
+      "create": {
+        "syntax": "python -m venv <name>",
+        "description": "Create a new virtual environment",
+        "flags": [
+          {
+            "flag": "--system-site-packages",
+            "description": "Give venv access to system site-packages"
+          },
+          {
+            "flag": "--clear",
+            "description": "Delete existing venv contents before creating"
+          },
+          {
+            "flag": "--upgrade",
+            "description": "Upgrade venv directory to use current Python version"
+          },
+          {
+            "flag": "--without-pip",
+            "description": "Skip installing pip in the venv"
+          }
+        ],
+        "examples": [
+          {
+            "command": "python -m venv venv",
+            "explanation": "Create virtual environment named 'venv' in current directory"
+          },
+          {
+            "command": "python -m venv myproject-env",
+            "explanation": "Create venv with custom name 'myproject-env'"
+          },
+          {
+            "command": "python -m venv venv --system-site-packages",
+            "explanation": "Create venv with access to globally installed packages"
+          },
+          {
+            "command": "python3 -m venv venv",
+            "explanation": "Create venv using Python 3 explicitly (Linux/Mac)"
+          }
+        ]
+      },
+      "activate-powershell": {
+        "syntax": ".\\venv\\Scripts\\Activate.ps1",
+        "description": "Activate virtual environment (PowerShell)",
+        "flags": [],
+        "examples": [
+          {
+            "command": ".\\venv\\Scripts\\Activate.ps1",
+            "explanation": "Activate venv in PowerShell (most common)"
+          },
+          {
+            "command": ".\\myproject-env\\Scripts\\Activate.ps1",
+            "explanation": "Activate custom-named venv"
+          },
+          {
+            "command": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser",
+            "explanation": "Fix 'cannot be loaded because running scripts is disabled' error"
+          }
+        ]
+      },
+      "activate-cmd": {
+        "syntax": "venv\\Scripts\\activate.bat",
+        "description": "Activate virtual environment (Windows CMD)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "venv\\Scripts\\activate.bat",
+            "explanation": "Activate venv in Windows Command Prompt"
+          },
+          {
+            "command": "myproject-env\\Scripts\\activate.bat",
+            "explanation": "Activate custom-named venv"
+          }
+        ]
+      },
+      "activate-linux": {
+        "syntax": "source venv/bin/activate",
+        "description": "Activate virtual environment (Linux/Mac)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "source venv/bin/activate",
+            "explanation": "Activate venv in Linux/Mac (bash/zsh)"
+          },
+          {
+            "command": ". venv/bin/activate",
+            "explanation": "Alternative activation syntax (shorter)"
+          },
+          {
+            "command": "source myproject-env/bin/activate",
+            "explanation": "Activate custom-named venv"
+          }
+        ]
+      },
+      "deactivate": {
+        "syntax": "deactivate",
+        "description": "Deactivate current virtual environment (all platforms)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "deactivate",
+            "explanation": "Exit/deactivate the current virtual environment"
+          }
+        ]
+      },
+      "run-script-ps": {
+        "syntax": ".\\venv\\Scripts\\python.exe <script.py>",
+        "description": "Run Python script in venv without activating (PowerShell)",
+        "flags": [],
+        "examples": [
+          {
+            "command": ".\\venv\\Scripts\\python.exe app.py",
+            "explanation": "Run app.py using venv Python (PowerShell)"
+          },
+          {
+            "command": ".\\venv\\Scripts\\python.exe manage.py runserver",
+            "explanation": "Run Django dev server using venv Python"
+          },
+          {
+            "command": ".\\venv\\Scripts\\python.exe -m flask run",
+            "explanation": "Run Flask server using venv Python"
+          }
+        ]
+      },
+      "run-script-linux": {
+        "syntax": "./venv/bin/python <script.py>",
+        "description": "Run Python script in venv without activating (Linux/Mac)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "./venv/bin/python app.py",
+            "explanation": "Run app.py using venv Python (Linux/Mac)"
+          },
+          {
+            "command": "./venv/bin/python manage.py runserver",
+            "explanation": "Run Django dev server using venv Python"
+          },
+          {
+            "command": "./venv/bin/python -m flask run",
+            "explanation": "Run Flask server using venv Python"
+          }
+        ]
+      },
+      "install-packages": {
+        "syntax": "pip install <package>",
+        "description": "Install packages in active venv",
+        "flags": [
+          {
+            "flag": "-r requirements.txt",
+            "description": "Install from requirements file"
+          },
+          {
+            "flag": "--upgrade",
+            "description": "Upgrade package to latest version"
+          },
+          {
+            "flag": "-e .",
+            "description": "Install in editable mode (for development)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip install flask",
+            "explanation": "Install Flask in active venv"
+          },
+          {
+            "command": "pip install -r requirements.txt",
+            "explanation": "Install all packages from requirements.txt"
+          },
+          {
+            "command": "pip install --upgrade pip",
+            "explanation": "Upgrade pip itself to latest version"
+          },
+          {
+            "command": "pip install django==4.2.0",
+            "explanation": "Install specific version of Django"
+          }
+        ]
+      },
+      "list-packages": {
+        "syntax": "pip list",
+        "description": "List all installed packages in venv",
+        "flags": [
+          {
+            "flag": "--outdated",
+            "description": "List outdated packages"
+          },
+          {
+            "flag": "--format freeze",
+            "description": "Output in requirements.txt format"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip list",
+            "explanation": "Show all installed packages and versions"
+          },
+          {
+            "command": "pip list --outdated",
+            "explanation": "Show packages that have newer versions available"
+          },
+          {
+            "command": "pip show flask",
+            "explanation": "Show detailed info about specific package"
+          }
+        ]
+      },
+      "freeze-requirements": {
+        "syntax": "pip freeze > requirements.txt",
+        "description": "Export installed packages to requirements.txt",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip freeze > requirements.txt",
+            "explanation": "Create/overwrite requirements.txt with current packages"
+          },
+          {
+            "command": "pip freeze | findstr -v \"pkg-resources\" > requirements.txt",
+            "explanation": "Freeze without pkg-resources (CMD - fixes common bug)"
+          },
+          {
+            "command": "pip freeze | grep -v \"pkg-resources\" > requirements.txt",
+            "explanation": "Freeze without pkg-resources (Linux - fixes common bug)"
+          }
+        ]
+      },
+      "uninstall-package": {
+        "syntax": "pip uninstall <package>",
+        "description": "Uninstall package from venv",
+        "flags": [
+          {
+            "flag": "-y",
+            "description": "Don't ask for confirmation"
+          },
+          {
+            "flag": "-r requirements.txt",
+            "description": "Uninstall all packages in requirements file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pip uninstall flask",
+            "explanation": "Uninstall Flask from venv"
+          },
+          {
+            "command": "pip uninstall -y flask django",
+            "explanation": "Uninstall multiple packages without confirmation"
+          }
+        ]
+      },
+      "delete-venv": {
+        "syntax": "Remove entire venv directory",
+        "description": "Delete virtual environment completely",
+        "flags": [],
+        "examples": [
+          {
+            "command": "rmdir /S /Q venv",
+            "explanation": "Delete venv folder (Windows CMD)"
+          },
+          {
+            "command": "Remove-Item -Recurse -Force venv",
+            "explanation": "Delete venv folder (PowerShell)"
+          },
+          {
+            "command": "rm -rf venv",
+            "explanation": "Delete venv folder (Linux/Mac)"
+          }
+        ]
+      },
+      "check-active": {
+        "syntax": "Check if venv is active",
+        "description": "Verify which Python/venv is currently active",
+        "flags": [],
+        "examples": [
+          {
+            "command": "where python",
+            "explanation": "Show Python path (Windows) - should show venv path if active"
+          },
+          {
+            "command": "which python",
+            "explanation": "Show Python path (Linux/Mac) - should show venv path if active"
+          },
+          {
+            "command": "python --version",
+            "explanation": "Check Python version in current environment"
+          },
+          {
+            "command": "pip --version",
+            "explanation": "Check pip version and location (shows venv path if active)"
+          }
+        ]
+      },
+      "upgrade-pip": {
+        "syntax": "python -m pip install --upgrade pip",
+        "description": "Upgrade pip to latest version in venv",
+        "flags": [],
+        "examples": [
+          {
+            "command": "python -m pip install --upgrade pip",
+            "explanation": "Upgrade pip to latest version (most reliable method)"
+          },
+          {
+            "command": "pip install --upgrade pip",
+            "explanation": "Alternative upgrade method (shorter)"
+          },
+          {
+            "command": ".\\venv\\Scripts\\python.exe -m pip install --upgrade pip",
+            "explanation": "Upgrade pip without activating venv (PowerShell)"
+          }
+        ]
+      },
+      "create-requirements": {
+        "syntax": "Manual requirements.txt creation",
+        "description": "Create requirements.txt file manually or from scratch",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip freeze > requirements.txt",
+            "explanation": "Generate requirements.txt from current venv"
+          },
+          {
+            "command": "pip install pipreqs && pipreqs .",
+            "explanation": "Generate requirements.txt based on imports in your code (more accurate)"
+          },
+          {
+            "command": "echo flask==2.3.0 > requirements.txt",
+            "explanation": "Create requirements.txt manually (CMD/PowerShell)"
+          }
+        ]
+      },
+      "clone-venv": {
+        "syntax": "Replicate venv to another machine",
+        "description": "Copy venv setup to different computer/directory",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pip freeze > requirements.txt",
+            "explanation": "Step 1: Export current packages"
+          },
+          {
+            "command": "python -m venv venv && .\\venv\\Scripts\\Activate.ps1 && pip install -r requirements.txt",
+            "explanation": "Step 2: Create new venv and install packages (PowerShell)"
+          },
+          {
+            "command": "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+            "explanation": "Step 2: Create new venv and install packages (Linux/Mac)"
+          }
+        ]
+      },
+      "common-issues": {
+        "syntax": "Common venv problems and solutions",
+        "description": "Fix common virtual environment issues",
+        "flags": [],
+        "examples": [
+          {
+            "command": "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser",
+            "explanation": "Fix PowerShell script execution error when activating"
+          },
+          {
+            "command": "python -m venv --clear venv",
+            "explanation": "Recreate corrupted venv"
+          },
+          {
+            "command": "deactivate && .\\venv\\Scripts\\Activate.ps1",
+            "explanation": "Restart venv if packages not found"
+          },
+          {
+            "command": "pip install --upgrade setuptools wheel",
+            "explanation": "Fix package installation errors"
+          }
+        ]
+      }
+    }
+  }
+}

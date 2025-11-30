@@ -1,0 +1,343 @@
+{
+  "npm": {
+    "description": "Node Package Manager - JavaScript package manager",
+    "subcommands": {
+      "init": {
+        "syntax": "npm init [options]",
+        "description": "Create a package.json file",
+        "flags": [
+          {
+            "flag": "-y, --yes",
+            "description": "Skip questionnaire and use default values"
+          },
+          {
+            "flag": "--scope",
+            "description": "Create scoped package"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm init",
+            "explanation": "Interactively create package.json"
+          },
+          {
+            "command": "npm init -y",
+            "explanation": "Create package.json with default values"
+          }
+        ]
+      },
+      "install": {
+        "syntax": "npm install [package]",
+        "description": "Install packages",
+        "flags": [
+          {
+            "flag": "-g, --global",
+            "description": "Install package globally"
+          },
+          {
+            "flag": "--save-dev, -D",
+            "description": "Install as dev dependency"
+          },
+          {
+            "flag": "--save-prod, -P",
+            "description": "Install as production dependency (default)"
+          },
+          {
+            "flag": "--save-exact, -E",
+            "description": "Install exact version (no version range)"
+          },
+          {
+            "flag": "--legacy-peer-deps",
+            "description": "Ignore peer dependency conflicts"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm install",
+            "explanation": "Install all dependencies from package.json"
+          },
+          {
+            "command": "npm install express",
+            "explanation": "Install express package"
+          },
+          {
+            "command": "npm install --save-dev jest",
+            "explanation": "Install jest as dev dependency"
+          },
+          {
+            "command": "npm install -g typescript",
+            "explanation": "Install TypeScript globally"
+          },
+          {
+            "command": "npm install lodash@4.17.21",
+            "explanation": "Install specific version of package"
+          }
+        ]
+      },
+      "uninstall": {
+        "syntax": "npm uninstall [package]",
+        "description": "Remove packages",
+        "flags": [
+          {
+            "flag": "-g, --global",
+            "description": "Uninstall global package"
+          },
+          {
+            "flag": "--save-dev, -D",
+            "description": "Remove from devDependencies"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm uninstall express",
+            "explanation": "Remove express package"
+          },
+          {
+            "command": "npm uninstall -g typescript",
+            "explanation": "Remove global TypeScript installation"
+          }
+        ]
+      },
+      "update": {
+        "syntax": "npm update [package]",
+        "description": "Update packages to latest version within semver range",
+        "flags": [
+          {
+            "flag": "-g, --global",
+            "description": "Update global packages"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm update",
+            "explanation": "Update all packages"
+          },
+          {
+            "command": "npm update express",
+            "explanation": "Update specific package"
+          }
+        ]
+      },
+      "run": {
+        "syntax": "npm run <script>",
+        "description": "Run script defined in package.json",
+        "flags": [
+          {
+            "flag": "--silent",
+            "description": "Suppress output"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm run dev",
+            "explanation": "Run 'dev' script from package.json"
+          },
+          {
+            "command": "npm run build",
+            "explanation": "Run 'build' script"
+          },
+          {
+            "command": "npm run test",
+            "explanation": "Run 'test' script (can also use: npm test)"
+          }
+        ]
+      },
+      "start": {
+        "syntax": "npm start",
+        "description": "Run the 'start' script from package.json",
+        "flags": [],
+        "examples": [
+          {
+            "command": "npm start",
+            "explanation": "Start the application (runs 'start' script)"
+          }
+        ]
+      },
+      "test": {
+        "syntax": "npm test",
+        "description": "Run the 'test' script from package.json",
+        "flags": [],
+        "examples": [
+          {
+            "command": "npm test",
+            "explanation": "Run tests (alias for 'npm run test')"
+          },
+          {
+            "command": "npm test -- --coverage",
+            "explanation": "Run tests with additional arguments"
+          }
+        ]
+      },
+      "list": {
+        "syntax": "npm list [package]",
+        "description": "List installed packages",
+        "flags": [
+          {
+            "flag": "-g, --global",
+            "description": "List global packages"
+          },
+          {
+            "flag": "--depth=<n>",
+            "description": "Limit depth of dependency tree"
+          },
+          {
+            "flag": "--prod",
+            "description": "List production dependencies only"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm list",
+            "explanation": "List all installed packages"
+          },
+          {
+            "command": "npm list --depth=0",
+            "explanation": "List top-level packages only"
+          },
+          {
+            "command": "npm list -g --depth=0",
+            "explanation": "List globally installed packages"
+          }
+        ]
+      },
+      "outdated": {
+        "syntax": "npm outdated",
+        "description": "Check for outdated packages",
+        "flags": [
+          {
+            "flag": "-g, --global",
+            "description": "Check global packages"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm outdated",
+            "explanation": "Show outdated packages with current, wanted, and latest versions"
+          }
+        ]
+      },
+      "audit": {
+        "syntax": "npm audit [fix]",
+        "description": "Run security audit on dependencies",
+        "flags": [
+          {
+            "flag": "fix",
+            "description": "Automatically fix vulnerabilities"
+          },
+          {
+            "flag": "--force",
+            "description": "Force install of top-level modules (may break)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm audit",
+            "explanation": "Check for security vulnerabilities"
+          },
+          {
+            "command": "npm audit fix",
+            "explanation": "Automatically fix vulnerabilities"
+          },
+          {
+            "command": "npm audit fix --force",
+            "explanation": "Force fix vulnerabilities (may introduce breaking changes)"
+          }
+        ]
+      },
+      "ci": {
+        "syntax": "npm ci",
+        "description": "Clean install from package-lock.json (for CI/CD)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "npm ci",
+            "explanation": "Clean install (faster, requires package-lock.json)"
+          }
+        ]
+      },
+      "cache": {
+        "syntax": "npm cache [clean|verify]",
+        "description": "Manage npm cache",
+        "flags": [
+          {
+            "flag": "--force",
+            "description": "Force cache clean"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm cache verify",
+            "explanation": "Verify cache integrity"
+          },
+          {
+            "command": "npm cache clean --force",
+            "explanation": "Clear npm cache"
+          }
+        ]
+      },
+      "publish": {
+        "syntax": "npm publish [folder]",
+        "description": "Publish a package to npm registry",
+        "flags": [
+          {
+            "flag": "--access public",
+            "description": "Publish as public package"
+          },
+          {
+            "flag": "--tag <tag>",
+            "description": "Publish with specific tag"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm publish",
+            "explanation": "Publish package to npm"
+          },
+          {
+            "command": "npm publish --access public",
+            "explanation": "Publish scoped package as public"
+          }
+        ]
+      },
+      "version": {
+        "syntax": "npm version [<newversion> | major | minor | patch]",
+        "description": "Bump package version",
+        "flags": [
+          {
+            "flag": "-m, --message",
+            "description": "Custom commit message"
+          }
+        ],
+        "examples": [
+          {
+            "command": "npm version patch",
+            "explanation": "Bump patch version (e.g., 1.0.0 -> 1.0.1)"
+          },
+          {
+            "command": "npm version minor",
+            "explanation": "Bump minor version (e.g., 1.0.0 -> 1.1.0)"
+          },
+          {
+            "command": "npm version major",
+            "explanation": "Bump major version (e.g., 1.0.0 -> 2.0.0)"
+          }
+        ]
+      },
+      "link": {
+        "syntax": "npm link [package]",
+        "description": "Create symlink to package for local development",
+        "flags": [],
+        "examples": [
+          {
+            "command": "npm link",
+            "explanation": "Create global symlink to current package"
+          },
+          {
+            "command": "npm link package-name",
+            "explanation": "Link global package to current project"
+          }
+        ]
+      }
+    }
+  }
+}

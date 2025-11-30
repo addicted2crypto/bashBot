@@ -1,0 +1,843 @@
+{
+  "git": {
+    "description": "Distributed version control system",
+    "subcommands": {
+      "clone": {
+        "syntax": "git clone <repository> [directory]",
+        "description": "Clone a repository into a new directory",
+        "flags": [
+          {
+            "flag": "-b <branch>",
+            "description": "Clone a specific branch instead of the default"
+          },
+          {
+            "flag": "--depth <depth>",
+            "description": "Create a shallow clone with history truncated to specified number of commits"
+          },
+          {
+            "flag": "--single-branch",
+            "description": "Clone only one branch (default or specified with -b)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git clone https://github.com/user/repo.git",
+            "explanation": "Clone a repository from GitHub"
+          },
+          {
+            "command": "git clone -b develop https://github.com/user/repo.git",
+            "explanation": "Clone a specific branch"
+          },
+          {
+            "command": "git clone --depth 1 https://github.com/user/repo.git",
+            "explanation": "Shallow clone with only latest commit (faster, smaller)"
+          }
+        ]
+      },
+      "init": {
+        "syntax": "git init [directory]",
+        "description": "Create an empty Git repository or reinitialize an existing one",
+        "flags": [
+          {
+            "flag": "--bare",
+            "description": "Create a bare repository (no working directory)"
+          },
+          {
+            "flag": "-b <branch>",
+            "description": "Set the name of the initial branch"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git init",
+            "explanation": "Initialize a new Git repository in current directory"
+          },
+          {
+            "command": "git init my-project",
+            "explanation": "Create a new directory and initialize Git repository in it"
+          },
+          {
+            "command": "git init -b main",
+            "explanation": "Initialize with 'main' as the default branch name"
+          }
+        ]
+      },
+      "add": {
+        "syntax": "git add <pathspec>...",
+        "description": "Add file contents to the staging area (index)",
+        "flags": [
+          {
+            "flag": "-A, --all",
+            "description": "Add all changes (new, modified, deleted) in entire working tree"
+          },
+          {
+            "flag": "-u, --update",
+            "description": "Add only modified and deleted files, not new files"
+          },
+          {
+            "flag": "-p, --patch",
+            "description": "Interactively choose portions of files to add"
+          },
+          {
+            "flag": ".",
+            "description": "Add all changes in current directory and subdirectories"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git add file.txt",
+            "explanation": "Stage a specific file"
+          },
+          {
+            "command": "git add .",
+            "explanation": "Stage all changes in current directory"
+          },
+          {
+            "command": "git add -A",
+            "explanation": "Stage all changes in entire repository"
+          },
+          {
+            "command": "git add *.js",
+            "explanation": "Stage all JavaScript files in current directory"
+          },
+          {
+            "command": "git add -p",
+            "explanation": "Interactively stage changes (review each change)"
+          }
+        ]
+      },
+      "commit": {
+        "syntax": "git commit [options]",
+        "description": "Record changes to the repository",
+        "flags": [
+          {
+            "flag": "-m <message>",
+            "description": "Commit message (inline)"
+          },
+          {
+            "flag": "-a, --all",
+            "description": "Automatically stage all modified and deleted files"
+          },
+          {
+            "flag": "--amend",
+            "description": "Modify the last commit (change message or add files)"
+          },
+          {
+            "flag": "--no-verify",
+            "description": "Skip pre-commit and commit-msg hooks"
+          },
+          {
+            "flag": "-v, --verbose",
+            "description": "Show diff in commit message editor"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git commit -m \"Add new feature\"",
+            "explanation": "Commit staged changes with a message"
+          },
+          {
+            "command": "git commit -am \"Fix bug in login\"",
+            "explanation": "Stage all tracked files and commit with message"
+          },
+          {
+            "command": "git commit --amend -m \"Updated commit message\"",
+            "explanation": "Change the last commit message"
+          },
+          {
+            "command": "git commit --amend --no-edit",
+            "explanation": "Add staged changes to last commit without changing message"
+          }
+        ]
+      },
+      "status": {
+        "syntax": "git status [options]",
+        "description": "Show the working tree status",
+        "flags": [
+          {
+            "flag": "-s, --short",
+            "description": "Show status in short format"
+          },
+          {
+            "flag": "-b, --branch",
+            "description": "Show branch information even in short format"
+          },
+          {
+            "flag": "--ignored",
+            "description": "Show ignored files"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git status",
+            "explanation": "Show detailed status of working directory"
+          },
+          {
+            "command": "git status -s",
+            "explanation": "Show concise status (M = modified, A = added, ?? = untracked)"
+          },
+          {
+            "command": "git status -sb",
+            "explanation": "Short status with branch info"
+          }
+        ]
+      },
+      "push": {
+        "syntax": "git push [remote] [branch]",
+        "description": "Update remote refs along with associated objects",
+        "flags": [
+          {
+            "flag": "-u, --set-upstream",
+            "description": "Set upstream tracking for the branch"
+          },
+          {
+            "flag": "-f, --force",
+            "description": "Force push (overwrites remote history - DANGEROUS)"
+          },
+          {
+            "flag": "--force-with-lease",
+            "description": "Safer force push (fails if remote has unexpected changes)"
+          },
+          {
+            "flag": "--all",
+            "description": "Push all branches"
+          },
+          {
+            "flag": "--tags",
+            "description": "Push all tags"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git push",
+            "explanation": "Push current branch to its upstream remote"
+          },
+          {
+            "command": "git push origin main",
+            "explanation": "Push main branch to origin remote"
+          },
+          {
+            "command": "git push -u origin feature-branch",
+            "explanation": "Push new branch and set upstream tracking"
+          },
+          {
+            "command": "git push --force-with-lease",
+            "explanation": "Force push with safety check (better than --force)"
+          }
+        ]
+      },
+      "pull": {
+        "syntax": "git pull [remote] [branch]",
+        "description": "Fetch from and integrate with another repository or local branch",
+        "flags": [
+          {
+            "flag": "--rebase",
+            "description": "Rebase current branch on top of upstream after fetching"
+          },
+          {
+            "flag": "--no-rebase",
+            "description": "Merge instead of rebase (default)"
+          },
+          {
+            "flag": "--ff-only",
+            "description": "Only update if can fast-forward (no merge commit)"
+          },
+          {
+            "flag": "--all",
+            "description": "Fetch all remotes"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git pull",
+            "explanation": "Fetch and merge changes from upstream"
+          },
+          {
+            "command": "git pull origin main",
+            "explanation": "Pull changes from main branch on origin"
+          },
+          {
+            "command": "git pull --rebase",
+            "explanation": "Fetch and rebase (cleaner history, no merge commits)"
+          },
+          {
+            "command": "git pull --ff-only",
+            "explanation": "Only pull if fast-forward is possible"
+          }
+        ]
+      },
+      "fetch": {
+        "syntax": "git fetch [remote]",
+        "description": "Download objects and refs from another repository",
+        "flags": [
+          {
+            "flag": "--all",
+            "description": "Fetch all remotes"
+          },
+          {
+            "flag": "--prune",
+            "description": "Remove remote-tracking branches that no longer exist on remote"
+          },
+          {
+            "flag": "--tags",
+            "description": "Fetch all tags"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git fetch",
+            "explanation": "Fetch updates from default remote without merging"
+          },
+          {
+            "command": "git fetch origin",
+            "explanation": "Fetch from origin remote"
+          },
+          {
+            "command": "git fetch --all --prune",
+            "explanation": "Fetch from all remotes and clean up deleted branches"
+          }
+        ]
+      },
+      "branch": {
+        "syntax": "git branch [options] [branch-name]",
+        "description": "List, create, or delete branches",
+        "flags": [
+          {
+            "flag": "-a, --all",
+            "description": "List both local and remote branches"
+          },
+          {
+            "flag": "-d, --delete",
+            "description": "Delete a branch (safe - checks if merged)"
+          },
+          {
+            "flag": "-D",
+            "description": "Force delete a branch (even if not merged)"
+          },
+          {
+            "flag": "-m, --move",
+            "description": "Rename a branch"
+          },
+          {
+            "flag": "-r, --remotes",
+            "description": "List remote-tracking branches"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git branch",
+            "explanation": "List all local branches"
+          },
+          {
+            "command": "git branch feature-login",
+            "explanation": "Create a new branch named 'feature-login'"
+          },
+          {
+            "command": "git branch -d old-feature",
+            "explanation": "Delete a merged branch"
+          },
+          {
+            "command": "git branch -D unmerged-feature",
+            "explanation": "Force delete an unmerged branch"
+          },
+          {
+            "command": "git branch -a",
+            "explanation": "List all local and remote branches"
+          },
+          {
+            "command": "git branch -m old-name new-name",
+            "explanation": "Rename a branch"
+          }
+        ]
+      },
+      "checkout": {
+        "syntax": "git checkout [options] <branch|commit|file>",
+        "description": "Switch branches or restore working tree files",
+        "flags": [
+          {
+            "flag": "-b",
+            "description": "Create a new branch and switch to it"
+          },
+          {
+            "flag": "-B",
+            "description": "Create or reset a branch and switch to it"
+          },
+          {
+            "flag": "--track",
+            "description": "Set up tracking for remote branch"
+          },
+          {
+            "flag": "--",
+            "description": "Separator to disambiguate files from branches"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git checkout main",
+            "explanation": "Switch to main branch"
+          },
+          {
+            "command": "git checkout -b feature-new",
+            "explanation": "Create and switch to new branch"
+          },
+          {
+            "command": "git checkout -- file.txt",
+            "explanation": "Discard changes to file.txt (restore from last commit)"
+          },
+          {
+            "command": "git checkout abc123",
+            "explanation": "Switch to specific commit (detached HEAD state)"
+          }
+        ]
+      },
+      "switch": {
+        "syntax": "git switch [options] <branch>",
+        "description": "Switch branches (newer, clearer alternative to checkout)",
+        "flags": [
+          {
+            "flag": "-c, --create",
+            "description": "Create a new branch and switch to it"
+          },
+          {
+            "flag": "-C, --force-create",
+            "description": "Force create (reset if exists) and switch"
+          },
+          {
+            "flag": "-d, --detach",
+            "description": "Switch to a commit in detached HEAD state"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git switch main",
+            "explanation": "Switch to main branch"
+          },
+          {
+            "command": "git switch -c feature-new",
+            "explanation": "Create and switch to new branch"
+          },
+          {
+            "command": "git switch -",
+            "explanation": "Switch to previous branch"
+          }
+        ]
+      },
+      "merge": {
+        "syntax": "git merge [options] <branch>",
+        "description": "Join two or more development histories together",
+        "flags": [
+          {
+            "flag": "--no-ff",
+            "description": "Create a merge commit even if fast-forward is possible"
+          },
+          {
+            "flag": "--ff-only",
+            "description": "Refuse to merge unless fast-forward is possible"
+          },
+          {
+            "flag": "--squash",
+            "description": "Squash all commits into one"
+          },
+          {
+            "flag": "--abort",
+            "description": "Abort current merge and restore pre-merge state"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git merge feature-branch",
+            "explanation": "Merge feature-branch into current branch"
+          },
+          {
+            "command": "git merge --no-ff feature-branch",
+            "explanation": "Create a merge commit (preserves branch history)"
+          },
+          {
+            "command": "git merge --squash feature-branch",
+            "explanation": "Merge all commits as a single commit"
+          },
+          {
+            "command": "git merge --abort",
+            "explanation": "Cancel merge and return to pre-merge state"
+          }
+        ]
+      },
+      "rebase": {
+        "syntax": "git rebase [options] <upstream>",
+        "description": "Reapply commits on top of another base tip",
+        "flags": [
+          {
+            "flag": "-i, --interactive",
+            "description": "Interactive rebase (edit, squash, reorder commits)"
+          },
+          {
+            "flag": "--continue",
+            "description": "Continue after resolving conflicts"
+          },
+          {
+            "flag": "--abort",
+            "description": "Abort rebase and return to original state"
+          },
+          {
+            "flag": "--skip",
+            "description": "Skip current commit and continue"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git rebase main",
+            "explanation": "Rebase current branch onto main"
+          },
+          {
+            "command": "git rebase -i HEAD~3",
+            "explanation": "Interactively rebase last 3 commits"
+          },
+          {
+            "command": "git rebase --continue",
+            "explanation": "Continue rebase after resolving conflicts"
+          },
+          {
+            "command": "git rebase --abort",
+            "explanation": "Cancel rebase and return to original state"
+          }
+        ]
+      },
+      "log": {
+        "syntax": "git log [options]",
+        "description": "Show commit logs",
+        "flags": [
+          {
+            "flag": "--oneline",
+            "description": "Show each commit on a single line"
+          },
+          {
+            "flag": "--graph",
+            "description": "Show ASCII graph of branch structure"
+          },
+          {
+            "flag": "-n <number>",
+            "description": "Limit number of commits shown"
+          },
+          {
+            "flag": "--author=<pattern>",
+            "description": "Filter commits by author"
+          },
+          {
+            "flag": "--since=<date>",
+            "description": "Show commits since date"
+          },
+          {
+            "flag": "--stat",
+            "description": "Show file change statistics"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git log",
+            "explanation": "Show commit history"
+          },
+          {
+            "command": "git log --oneline -10",
+            "explanation": "Show last 10 commits in compact format"
+          },
+          {
+            "command": "git log --graph --oneline --all",
+            "explanation": "Show all branches with graph visualization"
+          },
+          {
+            "command": "git log --since=\"2 weeks ago\"",
+            "explanation": "Show commits from last 2 weeks"
+          },
+          {
+            "command": "git log --author=\"John\"",
+            "explanation": "Show commits by specific author"
+          }
+        ]
+      },
+      "diff": {
+        "syntax": "git diff [options] [<commit>] [--] [<path>]",
+        "description": "Show changes between commits, commit and working tree, etc",
+        "flags": [
+          {
+            "flag": "--staged, --cached",
+            "description": "Show changes in staging area"
+          },
+          {
+            "flag": "--name-only",
+            "description": "Show only names of changed files"
+          },
+          {
+            "flag": "--stat",
+            "description": "Show change statistics"
+          },
+          {
+            "flag": "<commit>..<commit>",
+            "description": "Show diff between two commits"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git diff",
+            "explanation": "Show unstaged changes"
+          },
+          {
+            "command": "git diff --staged",
+            "explanation": "Show staged changes"
+          },
+          {
+            "command": "git diff HEAD~1 HEAD",
+            "explanation": "Show changes in last commit"
+          },
+          {
+            "command": "git diff main feature-branch",
+            "explanation": "Show differences between two branches"
+          },
+          {
+            "command": "git diff --name-only",
+            "explanation": "List changed files only"
+          }
+        ]
+      },
+      "stash": {
+        "syntax": "git stash [options]",
+        "description": "Stash changes in a dirty working directory away",
+        "flags": [
+          {
+            "flag": "push -m <message>",
+            "description": "Stash with a message"
+          },
+          {
+            "flag": "list",
+            "description": "List all stashes"
+          },
+          {
+            "flag": "pop",
+            "description": "Apply and remove most recent stash"
+          },
+          {
+            "flag": "apply",
+            "description": "Apply stash without removing it"
+          },
+          {
+            "flag": "drop",
+            "description": "Remove a stash"
+          },
+          {
+            "flag": "clear",
+            "description": "Remove all stashes"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git stash",
+            "explanation": "Stash current changes"
+          },
+          {
+            "command": "git stash push -m \"WIP: feature\"",
+            "explanation": "Stash with descriptive message"
+          },
+          {
+            "command": "git stash list",
+            "explanation": "Show all stashed changes"
+          },
+          {
+            "command": "git stash pop",
+            "explanation": "Apply most recent stash and remove it"
+          },
+          {
+            "command": "git stash apply stash@{2}",
+            "explanation": "Apply a specific stash"
+          }
+        ]
+      },
+      "reset": {
+        "syntax": "git reset [options] [<commit>]",
+        "description": "Reset current HEAD to specified state",
+        "flags": [
+          {
+            "flag": "--soft",
+            "description": "Keep changes in staging area"
+          },
+          {
+            "flag": "--mixed",
+            "description": "Keep changes but unstage them (default)"
+          },
+          {
+            "flag": "--hard",
+            "description": "Discard all changes (DANGEROUS)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git reset HEAD~1",
+            "explanation": "Undo last commit, keep changes unstaged"
+          },
+          {
+            "command": "git reset --soft HEAD~1",
+            "explanation": "Undo last commit, keep changes staged"
+          },
+          {
+            "command": "git reset --hard HEAD~1",
+            "explanation": "Undo last commit and discard changes (DANGEROUS)"
+          },
+          {
+            "command": "git reset HEAD file.txt",
+            "explanation": "Unstage a file"
+          }
+        ]
+      },
+      "restore": {
+        "syntax": "git restore [options] <file>",
+        "description": "Restore working tree files (newer alternative to checkout)",
+        "flags": [
+          {
+            "flag": "--staged",
+            "description": "Restore files in staging area"
+          },
+          {
+            "flag": "--source=<tree>",
+            "description": "Restore from specific commit"
+          },
+          {
+            "flag": "--worktree",
+            "description": "Restore files in working directory (default)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git restore file.txt",
+            "explanation": "Discard changes to file.txt"
+          },
+          {
+            "command": "git restore --staged file.txt",
+            "explanation": "Unstage file.txt"
+          },
+          {
+            "command": "git restore --source=HEAD~1 file.txt",
+            "explanation": "Restore file from previous commit"
+          }
+        ]
+      },
+      "remote": {
+        "syntax": "git remote [options]",
+        "description": "Manage set of tracked repositories",
+        "flags": [
+          {
+            "flag": "-v, --verbose",
+            "description": "Show remote URLs"
+          },
+          {
+            "flag": "add <name> <url>",
+            "description": "Add a new remote"
+          },
+          {
+            "flag": "remove <name>",
+            "description": "Remove a remote"
+          },
+          {
+            "flag": "rename <old> <new>",
+            "description": "Rename a remote"
+          },
+          {
+            "flag": "set-url <name> <url>",
+            "description": "Change remote URL"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git remote -v",
+            "explanation": "List all remotes with URLs"
+          },
+          {
+            "command": "git remote add origin https://github.com/user/repo.git",
+            "explanation": "Add a remote named 'origin'"
+          },
+          {
+            "command": "git remote remove origin",
+            "explanation": "Remove the 'origin' remote"
+          },
+          {
+            "command": "git remote set-url origin https://github.com/user/new-repo.git",
+            "explanation": "Change URL of existing remote"
+          }
+        ]
+      },
+      "tag": {
+        "syntax": "git tag [options] <tagname>",
+        "description": "Create, list, delete or verify tags",
+        "flags": [
+          {
+            "flag": "-a, --annotate",
+            "description": "Create an annotated tag"
+          },
+          {
+            "flag": "-m <message>",
+            "description": "Tag message"
+          },
+          {
+            "flag": "-d, --delete",
+            "description": "Delete a tag"
+          },
+          {
+            "flag": "-l, --list",
+            "description": "List tags"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git tag",
+            "explanation": "List all tags"
+          },
+          {
+            "command": "git tag v1.0.0",
+            "explanation": "Create a lightweight tag"
+          },
+          {
+            "command": "git tag -a v1.0.0 -m \"Release version 1.0.0\"",
+            "explanation": "Create an annotated tag with message"
+          },
+          {
+            "command": "git tag -d v1.0.0",
+            "explanation": "Delete a tag locally"
+          },
+          {
+            "command": "git push origin v1.0.0",
+            "explanation": "Push tag to remote"
+          }
+        ]
+      },
+      "cherry-pick": {
+        "syntax": "git cherry-pick [options] <commit>",
+        "description": "Apply changes from specific commits",
+        "flags": [
+          {
+            "flag": "-n, --no-commit",
+            "description": "Apply changes without committing"
+          },
+          {
+            "flag": "--continue",
+            "description": "Continue after resolving conflicts"
+          },
+          {
+            "flag": "--abort",
+            "description": "Cancel cherry-pick"
+          }
+        ],
+        "examples": [
+          {
+            "command": "git cherry-pick abc123",
+            "explanation": "Apply changes from commit abc123 to current branch"
+          },
+          {
+            "command": "git cherry-pick abc123 def456",
+            "explanation": "Apply multiple commits"
+          },
+          {
+            "command": "git cherry-pick --continue",
+            "explanation": "Continue after resolving conflicts"
+          }
+        ]
+      }
+    }
+  }
+}

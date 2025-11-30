@@ -1,0 +1,361 @@
+{
+  "localhost": {
+    "description": "Manage local development servers and ports (PowerShell, CMD, Linux)",
+    "subcommands": {
+      "find-port-ps": {
+        "syntax": "Get-NetTCPConnection -LocalPort <port>",
+        "description": "Find what's running on a specific port (PowerShell)",
+        "flags": [
+          {
+            "flag": "-LocalPort <port>",
+            "description": "Port number to check"
+          },
+          {
+            "flag": "-State Listen",
+            "description": "Only show listening ports"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-NetTCPConnection -LocalPort 3000",
+            "explanation": "Find what's running on port 3000 (PowerShell)"
+          },
+          {
+            "command": "Get-NetTCPConnection -LocalPort 3000 | Select-Object -ExpandProperty OwningProcess",
+            "explanation": "Get PID of process on port 3000"
+          },
+          {
+            "command": "Get-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess",
+            "explanation": "Get full process details for port 3000"
+          }
+        ]
+      },
+      "find-port-cmd": {
+        "syntax": "netstat -ano | findstr :<port>",
+        "description": "Find what's running on a specific port (CMD)",
+        "flags": [
+          {
+            "flag": "-a",
+            "description": "Show all connections"
+          },
+          {
+            "flag": "-n",
+            "description": "Show addresses in numerical form"
+          },
+          {
+            "flag": "-o",
+            "description": "Show owning process ID"
+          }
+        ],
+        "examples": [
+          {
+            "command": "netstat -ano | findstr :3000",
+            "explanation": "Find what's running on port 3000 (CMD)"
+          },
+          {
+            "command": "netstat -ano | findstr :8080",
+            "explanation": "Find what's running on port 8080"
+          },
+          {
+            "command": "netstat -ano | findstr LISTENING",
+            "explanation": "Show all listening ports with PIDs"
+          }
+        ]
+      },
+      "find-port-linux": {
+        "syntax": "lsof -i :<port>",
+        "description": "Find what's running on a specific port (Linux)",
+        "flags": [
+          {
+            "flag": "-i :<port>",
+            "description": "Show process using port"
+          },
+          {
+            "flag": "-t",
+            "description": "Return PID only"
+          },
+          {
+            "flag": "-P",
+            "description": "Don't convert port numbers to names"
+          }
+        ],
+        "examples": [
+          {
+            "command": "lsof -i :3000",
+            "explanation": "Find what's running on port 3000 (Linux)"
+          },
+          {
+            "command": "lsof -ti:3000",
+            "explanation": "Get PID only for port 3000"
+          },
+          {
+            "command": "sudo lsof -i -P -n | grep LISTEN",
+            "explanation": "List all listening ports"
+          }
+        ]
+      },
+      "kill-port-ps": {
+        "syntax": "Get-NetTCPConnection -LocalPort <port> | Stop-Process",
+        "description": "Kill process on specific port (PowerShell)",
+        "flags": [
+          {
+            "flag": "-Force",
+            "description": "Force kill without confirmation"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-NetTCPConnection -LocalPort 3000 | Select-Object -ExpandProperty OwningProcess | Stop-Process -Force",
+            "explanation": "Kill process on port 3000 (PowerShell)"
+          },
+          {
+            "command": "Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force",
+            "explanation": "Kill process on port 8080"
+          }
+        ]
+      },
+      "kill-port-cmd": {
+        "syntax": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :<port>') do taskkill /F /PID %a",
+        "description": "Kill process on specific port (CMD)",
+        "flags": [
+          {
+            "flag": "/F",
+            "description": "Force terminate"
+          },
+          {
+            "flag": "/PID <pid>",
+            "description": "Process ID to kill"
+          }
+        ],
+        "examples": [
+          {
+            "command": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :3000') do taskkill /F /PID %a",
+            "explanation": "Kill process on port 3000 (CMD - single line)"
+          },
+          {
+            "command": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8080') do taskkill /F /PID %a",
+            "explanation": "Kill process on port 8080 (CMD)"
+          }
+        ]
+      },
+      "kill-port-linux": {
+        "syntax": "lsof -ti:<port> | xargs kill -9",
+        "description": "Kill process on specific port (Linux)",
+        "flags": [
+          {
+            "flag": "-9",
+            "description": "Force kill (SIGKILL)"
+          },
+          {
+            "flag": "-15",
+            "description": "Graceful terminate (SIGTERM)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "lsof -ti:3000 | xargs kill -9",
+            "explanation": "Force kill process on port 3000 (Linux)"
+          },
+          {
+            "command": "fuser -k 8080/tcp",
+            "explanation": "Kill process on port 8080 using fuser"
+          },
+          {
+            "command": "sudo kill -9 $(lsof -ti:5000)",
+            "explanation": "Kill process on port 5000 with sudo"
+          }
+        ]
+      },
+      "kill-all-localhost-ps": {
+        "syntax": "Get-NetTCPConnection -LocalAddress 127.0.0.1 | Stop-Process",
+        "description": "Kill ALL localhost servers (PowerShell) - USE WITH CAUTION",
+        "flags": [
+          {
+            "flag": "-Force",
+            "description": "Force kill without confirmation"
+          },
+          {
+            "flag": "-ErrorAction SilentlyContinue",
+            "description": "Suppress errors"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-NetTCPConnection -LocalAddress 127.0.0.1 | Select-Object -ExpandProperty OwningProcess | Get-Unique | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }",
+            "explanation": "Kill ALL processes on localhost (PowerShell) - DANGEROUS"
+          },
+          {
+            "command": "3000,8080,5000,5173,8000 | ForEach-Object { Get-NetTCPConnection -LocalPort $_ -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | Stop-Process -Force -ErrorAction SilentlyContinue }",
+            "explanation": "Kill common dev server ports only (safer)"
+          }
+        ]
+      },
+      "kill-dev-ports-ps": {
+        "syntax": "Kill processes on common dev ports",
+        "description": "Kill only common development server ports (PowerShell)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "3000,8080,5000,5173,8000,4200,9000 | ForEach-Object { Get-NetTCPConnection -LocalPort $_ -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess | Stop-Process -Force -ErrorAction SilentlyContinue }",
+            "explanation": "Kill common dev ports: 3000(React/Node), 8080(Spring/Java), 5000(Flask), 5173(Vite), 8000(Django), 4200(Angular), 9000(PHP)"
+          },
+          {
+            "command": "$ports = 3000,8080,5000; $ports | ForEach-Object { Stop-Process -Id (Get-NetTCPConnection -LocalPort $_ -EA Silent).OwningProcess -Force -EA Silent }",
+            "explanation": "Kill custom list of ports (shorter version)"
+          }
+        ]
+      },
+      "kill-dev-ports-linux": {
+        "syntax": "Kill processes on common dev ports",
+        "description": "Kill only common development server ports (Linux)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "for port in 3000 8080 5000 5173 8000 4200 9000; do lsof -ti:$port | xargs kill -9 2>/dev/null; done",
+            "explanation": "Kill common dev ports (Linux)"
+          },
+          {
+            "command": "ports=(3000 8080 5000); for p in ${ports[@]}; do fuser -k $p/tcp 2>/dev/null; done",
+            "explanation": "Kill custom ports using fuser"
+          }
+        ]
+      },
+      "list-localhost-ps": {
+        "syntax": "Get-NetTCPConnection -LocalAddress 127.0.0.1",
+        "description": "List all localhost connections (PowerShell)",
+        "flags": [
+          {
+            "flag": "-State Listen",
+            "description": "Show only listening ports"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Get-NetTCPConnection -LocalAddress 127.0.0.1 -State Listen | Select-Object LocalPort, OwningProcess, @{Name='ProcessName';Expression={(Get-Process -Id $_.OwningProcess).ProcessName}}",
+            "explanation": "Show all localhost listening ports with process names"
+          },
+          {
+            "command": "Get-NetTCPConnection -LocalAddress 127.0.0.1 | Format-Table LocalPort, State, OwningProcess",
+            "explanation": "Simple table of localhost connections"
+          }
+        ]
+      },
+      "list-localhost-cmd": {
+        "syntax": "netstat -ano | findstr 127.0.0.1",
+        "description": "List all localhost connections (CMD)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "netstat -ano | findstr 127.0.0.1:* | findstr LISTENING",
+            "explanation": "Show all localhost listening ports (CMD)"
+          },
+          {
+            "command": "netstat -ano | findstr :3000 & netstat -ano | findstr :8080 & netstat -ano | findstr :5000",
+            "explanation": "Check multiple specific ports"
+          }
+        ]
+      },
+      "list-localhost-linux": {
+        "syntax": "lsof -i @127.0.0.1",
+        "description": "List all localhost connections (Linux)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "lsof -i @127.0.0.1 -P -n",
+            "explanation": "List all localhost connections"
+          },
+          {
+            "command": "netstat -tlnp | grep 127.0.0.1",
+            "explanation": "Show listening localhost ports with PIDs"
+          },
+          {
+            "command": "ss -tlnp | grep 127.0.0.1",
+            "explanation": "Modern alternative using ss (faster than netstat)"
+          }
+        ]
+      },
+      "find-process-by-name-ps": {
+        "syntax": "Get-Process <name> | Get-NetTCPConnection",
+        "description": "Find ports used by a process name (PowerShell)",
+        "flags": [],
+        "examples": [
+          {
+            "command": "Get-Process node | ForEach-Object { Get-NetTCPConnection -OwningProcess $_.Id -ErrorAction SilentlyContinue }",
+            "explanation": "Find all ports used by Node.js processes"
+          },
+          {
+            "command": "Get-Process python | ForEach-Object { Get-NetTCPConnection -OwningProcess $_.Id -EA Silent } | Select-Object LocalPort",
+            "explanation": "Find ports used by Python processes"
+          }
+        ]
+      },
+      "kill-by-name-ps": {
+        "syntax": "Stop-Process -Name <processname>",
+        "description": "Kill all processes by name (PowerShell)",
+        "flags": [
+          {
+            "flag": "-Force",
+            "description": "Force kill"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Stop-Process -Name node -Force",
+            "explanation": "Kill all Node.js processes"
+          },
+          {
+            "command": "Get-Process | Where-Object {$_.ProcessName -like '*python*'} | Stop-Process -Force",
+            "explanation": "Kill all Python processes"
+          }
+        ]
+      },
+      "quick-reference": {
+        "syntax": "Quick reference for common dev ports",
+        "description": "Common development server ports reference",
+        "flags": [],
+        "examples": [
+          {
+            "command": "3000 - React (npm start), Node.js, Express",
+            "explanation": "Default React development server"
+          },
+          {
+            "command": "5173 - Vite development server",
+            "explanation": "Modern frontend build tool"
+          },
+          {
+            "command": "8080 - Spring Boot, Tomcat, generic HTTP",
+            "explanation": "Common Java development port"
+          },
+          {
+            "command": "5000 - Flask (Python), ASP.NET",
+            "explanation": "Flask default development server"
+          },
+          {
+            "command": "8000 - Django (Python), generic HTTP",
+            "explanation": "Django default development server"
+          },
+          {
+            "command": "4200 - Angular CLI (ng serve)",
+            "explanation": "Angular development server"
+          },
+          {
+            "command": "9000 - PHP built-in server",
+            "explanation": "PHP development server"
+          },
+          {
+            "command": "5432 - PostgreSQL database",
+            "explanation": "PostgreSQL default port"
+          },
+          {
+            "command": "3306 - MySQL database",
+            "explanation": "MySQL default port"
+          },
+          {
+            "command": "27017 - MongoDB database",
+            "explanation": "MongoDB default port"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "pytest": {
+    "description": "Python testing framework",
+    "subcommands": {
+      "run": {
+        "syntax": "pytest [options] [file_or_dir]",
+        "description": "Run tests",
+        "flags": [
+          {
+            "flag": "-v, --verbose",
+            "description": "Increase verbosity"
+          },
+          {
+            "flag": "-q, --quiet",
+            "description": "Decrease verbosity"
+          },
+          {
+            "flag": "-s",
+            "description": "Show print statements (disable output capture)"
+          },
+          {
+            "flag": "-x, --exitfirst",
+            "description": "Exit on first failure"
+          },
+          {
+            "flag": "-k <expression>",
+            "description": "Run tests matching expression"
+          },
+          {
+            "flag": "-m <marker>",
+            "description": "Run tests with specific marker"
+          },
+          {
+            "flag": "--collect-only",
+            "description": "Show which tests would run without executing"
+          },
+          {
+            "flag": "--lf, --last-failed",
+            "description": "Rerun only failed tests from last run"
+          },
+          {
+            "flag": "--ff, --failed-first",
+            "description": "Run failed tests first, then others"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest",
+            "explanation": "Run all tests in current directory"
+          },
+          {
+            "command": "pytest tests/",
+            "explanation": "Run tests in specific directory"
+          },
+          {
+            "command": "pytest test_file.py",
+            "explanation": "Run tests in specific file"
+          },
+          {
+            "command": "pytest test_file.py::test_function",
+            "explanation": "Run specific test function"
+          },
+          {
+            "command": "pytest -v",
+            "explanation": "Run tests with verbose output"
+          },
+          {
+            "command": "pytest -x",
+            "explanation": "Stop on first failure"
+          },
+          {
+            "command": "pytest -k \"test_login\"",
+            "explanation": "Run tests matching 'test_login' in name"
+          },
+          {
+            "command": "pytest -m slow",
+            "explanation": "Run tests marked with @pytest.mark.slow"
+          },
+          {
+            "command": "pytest --lf",
+            "explanation": "Rerun only tests that failed last time"
+          }
+        ]
+      },
+      "coverage": {
+        "syntax": "pytest --cov[=path] [options]",
+        "description": "Run tests with coverage (requires pytest-cov)",
+        "flags": [
+          {
+            "flag": "--cov=<path>",
+            "description": "Measure coverage for specific path"
+          },
+          {
+            "flag": "--cov-report=<type>",
+            "description": "Coverage report type (html, term, xml)"
+          },
+          {
+            "flag": "--cov-report=html",
+            "description": "Generate HTML coverage report"
+          },
+          {
+            "flag": "--cov-fail-under=<min>",
+            "description": "Fail if coverage is below threshold"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --cov",
+            "explanation": "Run tests with coverage measurement"
+          },
+          {
+            "command": "pytest --cov=myapp",
+            "explanation": "Measure coverage for myapp module"
+          },
+          {
+            "command": "pytest --cov=myapp --cov-report=html",
+            "explanation": "Generate HTML coverage report"
+          },
+          {
+            "command": "pytest --cov --cov-fail-under=80",
+            "explanation": "Fail if coverage is below 80%"
+          }
+        ]
+      },
+      "markers": {
+        "syntax": "pytest --markers",
+        "description": "Show available markers",
+        "flags": [],
+        "examples": [
+          {
+            "command": "pytest --markers",
+            "explanation": "List all available test markers"
+          }
+        ]
+      },
+      "fixtures": {
+        "syntax": "pytest --fixtures",
+        "description": "Show available fixtures",
+        "flags": [
+          {
+            "flag": "--fixtures-per-test",
+            "description": "Show fixtures per test"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --fixtures",
+            "explanation": "List all available fixtures"
+          }
+        ]
+      },
+      "parallel": {
+        "syntax": "pytest -n <num> [options]",
+        "description": "Run tests in parallel (requires pytest-xdist)",
+        "flags": [
+          {
+            "flag": "-n <num>",
+            "description": "Number of workers (use 'auto' for CPU count)"
+          },
+          {
+            "flag": "--dist loadscope",
+            "description": "Group tests by module/class"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest -n auto",
+            "explanation": "Run tests in parallel using all CPU cores"
+          },
+          {
+            "command": "pytest -n 4",
+            "explanation": "Run tests using 4 workers"
+          }
+        ]
+      },
+      "debug": {
+        "syntax": "pytest --pdb [options]",
+        "description": "Drop into debugger on failures",
+        "flags": [
+          {
+            "flag": "--pdb",
+            "description": "Start debugger on errors/failures"
+          },
+          {
+            "flag": "--pdbcls",
+            "description": "Use custom debugger class"
+          },
+          {
+            "flag": "--trace",
+            "description": "Start debugger at beginning of each test"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --pdb",
+            "explanation": "Drop into debugger when test fails"
+          },
+          {
+            "command": "pytest --trace",
+            "explanation": "Start debugger at start of each test"
+          }
+        ]
+      },
+      "output": {
+        "syntax": "pytest [options] --tb=<style>",
+        "description": "Control output and traceback style",
+        "flags": [
+          {
+            "flag": "--tb=short",
+            "description": "Shorter traceback format"
+          },
+          {
+            "flag": "--tb=line",
+            "description": "One line per failure"
+          },
+          {
+            "flag": "--tb=no",
+            "description": "No traceback"
+          },
+          {
+            "flag": "--tb=long",
+            "description": "Long traceback (default)"
+          },
+          {
+            "flag": "--show-capture=no",
+            "description": "Don't show captured output on failure"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --tb=short",
+            "explanation": "Show shorter tracebacks"
+          },
+          {
+            "command": "pytest --tb=line",
+            "explanation": "Minimal traceback (one line per failure)"
+          }
+        ]
+      },
+      "duration": {
+        "syntax": "pytest --durations=<n>",
+        "description": "Show slowest test durations",
+        "flags": [
+          {
+            "flag": "--durations=<n>",
+            "description": "Show n slowest tests (0 = all)"
+          },
+          {
+            "flag": "--durations-min=<n>",
+            "description": "Only show tests slower than n seconds"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --durations=10",
+            "explanation": "Show 10 slowest tests"
+          },
+          {
+            "command": "pytest --durations=0",
+            "explanation": "Show duration of all tests"
+          }
+        ]
+      },
+      "config": {
+        "syntax": "pytest --co [options]",
+        "description": "Configuration and collection options",
+        "flags": [
+          {
+            "flag": "--co, --collect-only",
+            "description": "Show test collection without running"
+          },
+          {
+            "flag": "--rootdir=<path>",
+            "description": "Define root directory"
+          },
+          {
+            "flag": "-c <file>",
+            "description": "Load configuration from file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --co",
+            "explanation": "Show which tests will be collected"
+          },
+          {
+            "command": "pytest -c custom_pytest.ini",
+            "explanation": "Use custom configuration file"
+          }
+        ]
+      },
+      "warnings": {
+        "syntax": "pytest -W <action>",
+        "description": "Control warning behavior",
+        "flags": [
+          {
+            "flag": "-W ignore",
+            "description": "Ignore warnings"
+          },
+          {
+            "flag": "-W error",
+            "description": "Turn warnings into errors"
+          },
+          {
+            "flag": "--disable-warnings",
+            "description": "Disable all warnings"
+          }
+        ],
+        "examples": [
+          {
+            "command": "pytest --disable-warnings",
+            "explanation": "Run tests without showing warnings"
+          },
+          {
+            "command": "pytest -W error",
+            "explanation": "Treat warnings as errors"
+          }
+        ]
+      }
+    }
+  }
+}
