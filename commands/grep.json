@@ -1,0 +1,339 @@
+{
+  "grep": {
+    "description": "Search text patterns in files - powerful text search and filtering tool using regular expressions",
+    "subcommands": {
+      "search": {
+        "syntax": "grep [options] pattern [file...]",
+        "description": "Search for pattern in files",
+        "flags": [
+          {
+            "flag": "-i",
+            "description": "Case-insensitive search"
+          },
+          {
+            "flag": "-r, -R",
+            "description": "Recursive search in directories"
+          },
+          {
+            "flag": "-n",
+            "description": "Show line numbers"
+          },
+          {
+            "flag": "-v",
+            "description": "Invert match (show non-matching lines)"
+          },
+          {
+            "flag": "-c",
+            "description": "Count matching lines"
+          },
+          {
+            "flag": "-l",
+            "description": "Show only filenames with matches"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep \"error\" logfile.txt",
+            "explanation": "Search for 'error' in file"
+          },
+          {
+            "command": "grep -i \"error\" logfile.txt",
+            "explanation": "Case-insensitive search"
+          },
+          {
+            "command": "grep -n \"TODO\" *.js",
+            "explanation": "Search with line numbers in all JS files"
+          },
+          {
+            "command": "grep -r \"function\" src/",
+            "explanation": "Recursive search in directory"
+          },
+          {
+            "command": "cat file.txt | grep \"pattern\"",
+            "explanation": "Search in piped input"
+          }
+        ]
+      },
+      "regex": {
+        "syntax": "grep -E \"pattern\" [file...]",
+        "description": "Extended regular expression search",
+        "flags": [
+          {
+            "flag": "-E",
+            "description": "Extended regex (same as egrep)"
+          },
+          {
+            "flag": "-P",
+            "description": "Perl-compatible regex"
+          },
+          {
+            "flag": "-w",
+            "description": "Match whole words only"
+          },
+          {
+            "flag": "-x",
+            "description": "Match whole lines only"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -E \"error|warning|fail\" logfile.txt",
+            "explanation": "Search for multiple patterns (OR)"
+          },
+          {
+            "command": "grep -E \"^[0-9]+\" file.txt",
+            "explanation": "Lines starting with numbers"
+          },
+          {
+            "command": "grep -w \"test\" file.txt",
+            "explanation": "Match whole word 'test' (not 'testing')"
+          },
+          {
+            "command": "grep -E \"(error|warning).*line [0-9]+\" logfile.txt",
+            "explanation": "Complex pattern matching"
+          }
+        ]
+      },
+      "context": {
+        "syntax": "grep -A/-B/-C <num> pattern [file...]",
+        "description": "Show context lines around matches",
+        "flags": [
+          {
+            "flag": "-A <num>",
+            "description": "Show num lines After match"
+          },
+          {
+            "flag": "-B <num>",
+            "description": "Show num lines Before match"
+          },
+          {
+            "flag": "-C <num>",
+            "description": "Show num lines of Context (before and after)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -A 3 \"error\" logfile.txt",
+            "explanation": "Show 3 lines after each match"
+          },
+          {
+            "command": "grep -B 2 \"exception\" logfile.txt",
+            "explanation": "Show 2 lines before each match"
+          },
+          {
+            "command": "grep -C 5 \"critical\" logfile.txt",
+            "explanation": "Show 5 lines before and after match"
+          }
+        ]
+      },
+      "files": {
+        "syntax": "grep [file-options] pattern",
+        "description": "File-related grep operations",
+        "flags": [
+          {
+            "flag": "-l",
+            "description": "List filenames with matches only"
+          },
+          {
+            "flag": "-L",
+            "description": "List filenames WITHOUT matches"
+          },
+          {
+            "flag": "-h",
+            "description": "Suppress filename in output"
+          },
+          {
+            "flag": "-H",
+            "description": "Print filename with matches (default)"
+          },
+          {
+            "flag": "--include=<pattern>",
+            "description": "Search only files matching pattern"
+          },
+          {
+            "flag": "--exclude=<pattern>",
+            "description": "Skip files matching pattern"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -r -l \"TODO\" src/",
+            "explanation": "List files containing TODO"
+          },
+          {
+            "command": "grep -r \"error\" --include=\"*.log\" /var/log/",
+            "explanation": "Search only .log files"
+          },
+          {
+            "command": "grep -r \"pattern\" --exclude=\"*.min.js\" src/",
+            "explanation": "Exclude minified JS files"
+          },
+          {
+            "command": "grep -r \"function\" --exclude-dir=node_modules src/",
+            "explanation": "Exclude node_modules directory"
+          }
+        ]
+      },
+      "count": {
+        "syntax": "grep -c pattern [file...]",
+        "description": "Count occurrences",
+        "flags": [
+          {
+            "flag": "-c",
+            "description": "Count matching lines per file"
+          },
+          {
+            "flag": "-o",
+            "description": "Show only matched parts (useful with wc)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -c \"error\" logfile.txt",
+            "explanation": "Count lines with 'error'"
+          },
+          {
+            "command": "grep -o \"error\" logfile.txt | wc -l",
+            "explanation": "Count total occurrences (not lines)"
+          },
+          {
+            "command": "grep -rc \"TODO\" src/",
+            "explanation": "Count TODOs in each file recursively"
+          }
+        ]
+      },
+      "invert": {
+        "syntax": "grep -v pattern [file...]",
+        "description": "Invert match - show non-matching lines",
+        "flags": [
+          {
+            "flag": "-v",
+            "description": "Invert match"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -v \"^#\" config.txt",
+            "explanation": "Exclude comment lines"
+          },
+          {
+            "command": "grep -v \"^$\" file.txt",
+            "explanation": "Exclude empty lines"
+          },
+          {
+            "command": "ps aux | grep python | grep -v grep",
+            "explanation": "Show python processes (exclude grep itself)"
+          }
+        ]
+      },
+      "color": {
+        "syntax": "grep --color pattern [file...]",
+        "description": "Highlight matches with color",
+        "flags": [
+          {
+            "flag": "--color=auto",
+            "description": "Enable color for terminal output"
+          },
+          {
+            "flag": "--color=always",
+            "description": "Always use color (even when piped)"
+          },
+          {
+            "flag": "--color=never",
+            "description": "Disable color"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep --color=auto \"error\" logfile.txt",
+            "explanation": "Highlight matches in color"
+          },
+          {
+            "command": "export GREP_OPTIONS='--color=auto'",
+            "explanation": "Enable color by default (add to .bashrc)"
+          }
+        ]
+      },
+      "multiple": {
+        "syntax": "grep -e pattern1 -e pattern2 [file...]",
+        "description": "Search for multiple patterns",
+        "flags": [
+          {
+            "flag": "-e <pattern>",
+            "description": "Specify pattern (use multiple times)"
+          },
+          {
+            "flag": "-f <file>",
+            "description": "Read patterns from file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -e \"error\" -e \"warning\" logfile.txt",
+            "explanation": "Search for multiple patterns"
+          },
+          {
+            "command": "grep -f patterns.txt logfile.txt",
+            "explanation": "Use patterns from file"
+          },
+          {
+            "command": "grep -E \"error|warning|critical\" logfile.txt",
+            "explanation": "Multiple patterns with extended regex"
+          }
+        ]
+      },
+      "quiet": {
+        "syntax": "grep -q pattern [file...]",
+        "description": "Quiet mode - only set exit status",
+        "flags": [
+          {
+            "flag": "-q",
+            "description": "Quiet (no output, just exit code)"
+          },
+          {
+            "flag": "-s",
+            "description": "Suppress error messages"
+          }
+        ],
+        "examples": [
+          {
+            "command": "if grep -q \"error\" logfile.txt; then echo \"Errors found\"; fi",
+            "explanation": "Use in shell scripts for conditional logic"
+          },
+          {
+            "command": "grep -q \"pattern\" file.txt && echo \"Found\" || echo \"Not found\"",
+            "explanation": "Conditional execution based on match"
+          }
+        ]
+      },
+      "binary": {
+        "syntax": "grep [binary-options] pattern",
+        "description": "Handle binary files",
+        "flags": [
+          {
+            "flag": "-a, --text",
+            "description": "Treat binary files as text"
+          },
+          {
+            "flag": "-I",
+            "description": "Skip binary files"
+          },
+          {
+            "flag": "--binary-files=<type>",
+            "description": "How to handle binary (binary/text/without-match)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "grep -a \"pattern\" binary_file",
+            "explanation": "Search in binary file as text"
+          },
+          {
+            "command": "grep -rI \"pattern\" .",
+            "explanation": "Recursive search, skip binary files"
+          }
+        ]
+      }
+    }
+  }
+}

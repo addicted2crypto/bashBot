@@ -1,0 +1,362 @@
+{
+  "yarn": {
+    "description": "Fast, reliable package manager for JavaScript - alternative to npm with caching and workspaces",
+    "subcommands": {
+      "install": {
+        "syntax": "yarn install [options]",
+        "description": "Install all dependencies from package.json",
+        "flags": [
+          {
+            "flag": "--frozen-lockfile",
+            "description": "Don't update yarn.lock (CI/production)"
+          },
+          {
+            "flag": "--production",
+            "description": "Install only production dependencies"
+          },
+          {
+            "flag": "--check-files",
+            "description": "Verify installed files haven't been modified"
+          },
+          {
+            "flag": "--force",
+            "description": "Force re-download all packages"
+          },
+          {
+            "flag": "--offline",
+            "description": "Use only cached packages (no network)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn install",
+            "explanation": "Install all dependencies"
+          },
+          {
+            "command": "yarn install --frozen-lockfile",
+            "explanation": "CI/production install (don't modify lockfile)"
+          },
+          {
+            "command": "yarn install --production",
+            "explanation": "Install only production dependencies"
+          },
+          {
+            "command": "yarn",
+            "explanation": "Shorthand for 'yarn install'"
+          }
+        ]
+      },
+      "add": {
+        "syntax": "yarn add <package> [options]",
+        "description": "Add package to dependencies",
+        "flags": [
+          {
+            "flag": "-D, --dev",
+            "description": "Add to devDependencies"
+          },
+          {
+            "flag": "-P, --peer",
+            "description": "Add to peerDependencies"
+          },
+          {
+            "flag": "-O, --optional",
+            "description": "Add to optionalDependencies"
+          },
+          {
+            "flag": "-E, --exact",
+            "description": "Install exact version"
+          },
+          {
+            "flag": "-T, --tilde",
+            "description": "Install with tilde version range"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn add react",
+            "explanation": "Add react to dependencies"
+          },
+          {
+            "command": "yarn add --dev eslint",
+            "explanation": "Add eslint to devDependencies"
+          },
+          {
+            "command": "yarn add react@18.2.0 --exact",
+            "explanation": "Add specific version without range"
+          },
+          {
+            "command": "yarn add lodash axios moment",
+            "explanation": "Add multiple packages at once"
+          }
+        ]
+      },
+      "remove": {
+        "syntax": "yarn remove <package>",
+        "description": "Remove package from dependencies",
+        "flags": [],
+        "examples": [
+          {
+            "command": "yarn remove lodash",
+            "explanation": "Remove lodash from dependencies"
+          },
+          {
+            "command": "yarn remove eslint jest babel",
+            "explanation": "Remove multiple packages"
+          }
+        ]
+      },
+      "upgrade": {
+        "syntax": "yarn upgrade [package] [options]",
+        "description": "Update package to latest version",
+        "flags": [
+          {
+            "flag": "--latest",
+            "description": "Ignore version range in package.json"
+          },
+          {
+            "flag": "--pattern <pattern>",
+            "description": "Upgrade packages matching pattern"
+          },
+          {
+            "flag": "--scope <scope>",
+            "description": "Upgrade packages from specific scope"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn upgrade",
+            "explanation": "Upgrade all packages within version ranges"
+          },
+          {
+            "command": "yarn upgrade react",
+            "explanation": "Upgrade specific package"
+          },
+          {
+            "command": "yarn upgrade react --latest",
+            "explanation": "Upgrade to latest version (ignore semver range)"
+          },
+          {
+            "command": "yarn upgrade --pattern \"@babel/*\"",
+            "explanation": "Upgrade all Babel packages"
+          }
+        ]
+      },
+      "run": {
+        "syntax": "yarn run <script> [args]",
+        "description": "Run script defined in package.json",
+        "flags": [],
+        "examples": [
+          {
+            "command": "yarn run start",
+            "explanation": "Run the 'start' script"
+          },
+          {
+            "command": "yarn start",
+            "explanation": "Shorthand (yarn run is optional for most scripts)"
+          },
+          {
+            "command": "yarn test",
+            "explanation": "Run tests"
+          },
+          {
+            "command": "yarn build",
+            "explanation": "Run build script"
+          },
+          {
+            "command": "yarn run test -- --watch",
+            "explanation": "Pass arguments to script"
+          }
+        ]
+      },
+      "test": {
+        "syntax": "yarn test [options]",
+        "description": "Run test script",
+        "flags": [
+          {
+            "flag": "-- <args>",
+            "description": "Pass arguments to test runner"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn test",
+            "explanation": "Run all tests"
+          },
+          {
+            "command": "yarn test -- --watch",
+            "explanation": "Run tests in watch mode"
+          },
+          {
+            "command": "yarn test -- --coverage",
+            "explanation": "Run tests with coverage report"
+          }
+        ]
+      },
+      "init": {
+        "syntax": "yarn init [options]",
+        "description": "Create a new package.json file",
+        "flags": [
+          {
+            "flag": "-y, --yes",
+            "description": "Use defaults for all prompts"
+          },
+          {
+            "flag": "-p, --private",
+            "description": "Mark package as private"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn init",
+            "explanation": "Interactive package.json creation"
+          },
+          {
+            "command": "yarn init -y",
+            "explanation": "Create package.json with defaults"
+          }
+        ]
+      },
+      "list": {
+        "syntax": "yarn list [options]",
+        "description": "List installed packages",
+        "flags": [
+          {
+            "flag": "--depth <depth>",
+            "description": "Limit dependency tree depth"
+          },
+          {
+            "flag": "--pattern <pattern>",
+            "description": "Filter packages by pattern"
+          },
+          {
+            "flag": "--prod, --production",
+            "description": "Show only production dependencies"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn list",
+            "explanation": "List all installed packages"
+          },
+          {
+            "command": "yarn list --depth=0",
+            "explanation": "List only top-level dependencies"
+          },
+          {
+            "command": "yarn list --pattern \"react\"",
+            "explanation": "List packages matching pattern"
+          }
+        ]
+      },
+      "cache": {
+        "syntax": "yarn cache <command> [options]",
+        "description": "Manage yarn's cache directory",
+        "flags": [
+          {
+            "flag": "clean",
+            "description": "Clear global cache"
+          },
+          {
+            "flag": "dir",
+            "description": "Show cache directory path"
+          },
+          {
+            "flag": "list",
+            "description": "List cached packages"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn cache dir",
+            "explanation": "Show cache directory location"
+          },
+          {
+            "command": "yarn cache clean",
+            "explanation": "Clear all cached packages"
+          },
+          {
+            "command": "yarn cache list",
+            "explanation": "List all cached packages"
+          }
+        ]
+      },
+      "workspaces": {
+        "syntax": "yarn workspaces <command>",
+        "description": "Manage monorepo workspaces",
+        "flags": [
+          {
+            "flag": "info",
+            "description": "Show workspace dependency tree"
+          },
+          {
+            "flag": "run <script>",
+            "description": "Run script in all workspaces"
+          }
+        ],
+        "examples": [
+          {
+            "command": "yarn workspaces info",
+            "explanation": "Show workspace structure"
+          },
+          {
+            "command": "yarn workspaces run test",
+            "explanation": "Run tests in all workspaces"
+          },
+          {
+            "command": "yarn workspace <workspace-name> add <package>",
+            "explanation": "Add package to specific workspace"
+          }
+        ]
+      },
+      "why": {
+        "syntax": "yarn why <package>",
+        "description": "Show why a package is installed",
+        "flags": [],
+        "examples": [
+          {
+            "command": "yarn why lodash",
+            "explanation": "Show which packages depend on lodash"
+          },
+          {
+            "command": "yarn why react",
+            "explanation": "Show dependency tree for react"
+          }
+        ]
+      },
+      "outdated": {
+        "syntax": "yarn outdated [package]",
+        "description": "Check for outdated packages",
+        "flags": [],
+        "examples": [
+          {
+            "command": "yarn outdated",
+            "explanation": "List all outdated packages"
+          },
+          {
+            "command": "yarn outdated react",
+            "explanation": "Check if specific package is outdated"
+          }
+        ]
+      },
+      "global": {
+        "syntax": "yarn global <command> <package>",
+        "description": "Manage global packages",
+        "flags": [],
+        "examples": [
+          {
+            "command": "yarn global add create-react-app",
+            "explanation": "Install package globally"
+          },
+          {
+            "command": "yarn global remove eslint",
+            "explanation": "Remove global package"
+          },
+          {
+            "command": "yarn global list",
+            "explanation": "List globally installed packages"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -15,11 +15,13 @@ class ContextDetector:
     CONTEXT_PATTERNS = {
         'git': ['.git'],
         'npm': ['package.json', 'node_modules'],
+        'yarn': ['yarn.lock'],
         'python': ['requirements.txt', 'setup.py', 'pyproject.toml', 'Pipfile'],
         'venv': ['venv', '.venv', 'env', '.env'],
         'docker': ['Dockerfile', 'docker-compose.yml', 'docker-compose.yaml'],
         'pytest': ['pytest.ini', 'tests', 'test'],
         'pip': ['requirements.txt', 'setup.py'],
+        'ssh': ['.ssh'],
     }
 
     # Suggested commands for each context
@@ -35,6 +37,12 @@ class ContextDetector:
             ('npm run', 'Run package scripts'),
             ('npm test', 'Run tests'),
             ('npm start', 'Start development server'),
+        ],
+        'yarn': [
+            ('yarn install', 'Install all dependencies'),
+            ('yarn add', 'Add new package'),
+            ('yarn run', 'Run package script'),
+            ('yarn upgrade', 'Update packages'),
         ],
         'python': [
             ('pip install', 'Install Python packages'),
@@ -62,6 +70,12 @@ class ContextDetector:
             ('pip install', 'Install Python packages'),
             ('pip list', 'List installed packages'),
             ('pip freeze', 'Export requirements'),
+        ],
+        'ssh': [
+            ('ssh connect', 'Connect to remote server'),
+            ('ssh keygen', 'Generate SSH keys'),
+            ('ssh copy-id', 'Copy key to server'),
+            ('ssh tunnel', 'Create SSH tunnel/port forward'),
         ],
     }
 

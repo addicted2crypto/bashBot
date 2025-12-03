@@ -1,0 +1,403 @@
+{
+  "curl": {
+    "description": "Command-line tool for transferring data with URLs - HTTP requests, API testing, file downloads",
+    "subcommands": {
+      "get": {
+        "syntax": "curl [options] <URL>",
+        "description": "Make a GET request (default method)",
+        "flags": [
+          {
+            "flag": "-X GET",
+            "description": "Explicitly specify GET method"
+          },
+          {
+            "flag": "-i, --include",
+            "description": "Include response headers in output"
+          },
+          {
+            "flag": "-v, --verbose",
+            "description": "Show detailed request/response info"
+          },
+          {
+            "flag": "-s, --silent",
+            "description": "Silent mode (no progress bar)"
+          },
+          {
+            "flag": "-L, --location",
+            "description": "Follow redirects"
+          },
+          {
+            "flag": "-o <file>",
+            "description": "Save output to file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl https://api.github.com/users/octocat",
+            "explanation": "Basic GET request to fetch user data"
+          },
+          {
+            "command": "curl -i https://example.com",
+            "explanation": "GET request with response headers"
+          },
+          {
+            "command": "curl -v https://api.example.com/data",
+            "explanation": "Verbose output showing full request/response"
+          },
+          {
+            "command": "curl -L https://example.com/redirect",
+            "explanation": "Follow redirects automatically"
+          },
+          {
+            "command": "curl -o output.json https://api.example.com/data",
+            "explanation": "Save response to file"
+          }
+        ]
+      },
+      "post": {
+        "syntax": "curl -X POST [options] <URL>",
+        "description": "Send POST request with data",
+        "flags": [
+          {
+            "flag": "-X POST",
+            "description": "Specify POST method"
+          },
+          {
+            "flag": "-d, --data <data>",
+            "description": "Send data in request body (form-encoded)"
+          },
+          {
+            "flag": "-H, --header <header>",
+            "description": "Add custom header"
+          },
+          {
+            "flag": "--data-raw <data>",
+            "description": "Send raw data without processing"
+          },
+          {
+            "flag": "--json <data>",
+            "description": "Send JSON data (auto-sets Content-Type)"
+          },
+          {
+            "flag": "-F, --form <name=content>",
+            "description": "Submit form data (multipart/form-data)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -X POST -d \"name=John&email=john@example.com\" https://api.example.com/users",
+            "explanation": "POST form data"
+          },
+          {
+            "command": "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"John\"}' https://api.example.com/users",
+            "explanation": "POST JSON data with custom header"
+          },
+          {
+            "command": "curl -X POST --json '{\"title\":\"Test\",\"body\":\"Content\"}' https://api.example.com/posts",
+            "explanation": "POST JSON using --json flag (modern curl)"
+          },
+          {
+            "command": "curl -X POST -F \"file=@document.pdf\" https://api.example.com/upload",
+            "explanation": "Upload file using multipart form"
+          },
+          {
+            "command": "curl -X POST -d @data.json -H \"Content-Type: application/json\" https://api.example.com/data",
+            "explanation": "POST JSON from file"
+          }
+        ]
+      },
+      "put": {
+        "syntax": "curl -X PUT [options] <URL>",
+        "description": "Send PUT request to update resources",
+        "flags": [
+          {
+            "flag": "-X PUT",
+            "description": "Specify PUT method"
+          },
+          {
+            "flag": "-d, --data <data>",
+            "description": "Data to send in request body"
+          },
+          {
+            "flag": "-H, --header <header>",
+            "description": "Add custom header"
+          },
+          {
+            "flag": "-T, --upload-file <file>",
+            "description": "Upload file via PUT"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -X PUT -H \"Content-Type: application/json\" -d '{\"status\":\"completed\"}' https://api.example.com/tasks/123",
+            "explanation": "Update resource with JSON data"
+          },
+          {
+            "command": "curl -X PUT -T file.txt https://example.com/upload",
+            "explanation": "Upload file using PUT"
+          }
+        ]
+      },
+      "delete": {
+        "syntax": "curl -X DELETE [options] <URL>",
+        "description": "Send DELETE request to remove resources",
+        "flags": [
+          {
+            "flag": "-X DELETE",
+            "description": "Specify DELETE method"
+          },
+          {
+            "flag": "-H, --header <header>",
+            "description": "Add custom header"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -X DELETE https://api.example.com/users/123",
+            "explanation": "Delete a resource"
+          },
+          {
+            "command": "curl -X DELETE -H \"Authorization: Bearer TOKEN\" https://api.example.com/posts/456",
+            "explanation": "Delete with authentication"
+          }
+        ]
+      },
+      "auth": {
+        "syntax": "curl [auth-options] <URL>",
+        "description": "Authenticate requests with various methods",
+        "flags": [
+          {
+            "flag": "-u, --user <user:password>",
+            "description": "Basic authentication"
+          },
+          {
+            "flag": "-H \"Authorization: Bearer <token>\"",
+            "description": "Bearer token authentication"
+          },
+          {
+            "flag": "-H \"Authorization: Token <token>\"",
+            "description": "Token authentication"
+          },
+          {
+            "flag": "--oauth2-bearer <token>",
+            "description": "OAuth 2.0 Bearer token"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -u username:password https://api.example.com/data",
+            "explanation": "Basic authentication"
+          },
+          {
+            "command": "curl -H \"Authorization: Bearer eyJhbGc...\" https://api.example.com/protected",
+            "explanation": "JWT Bearer token authentication"
+          },
+          {
+            "command": "curl -H \"Authorization: Token abc123\" https://api.example.com/data",
+            "explanation": "API token authentication"
+          },
+          {
+            "command": "curl -u username https://api.example.com/data",
+            "explanation": "Prompt for password interactively"
+          }
+        ]
+      },
+      "headers": {
+        "syntax": "curl -H <header> [options] <URL>",
+        "description": "Add custom headers to requests",
+        "flags": [
+          {
+            "flag": "-H, --header <header>",
+            "description": "Add custom header (can use multiple times)"
+          },
+          {
+            "flag": "-A, --user-agent <agent>",
+            "description": "Set User-Agent header"
+          },
+          {
+            "flag": "-e, --referer <URL>",
+            "description": "Set Referer header"
+          },
+          {
+            "flag": "-b, --cookie <data>",
+            "description": "Send cookies"
+          },
+          {
+            "flag": "-c, --cookie-jar <file>",
+            "description": "Save cookies to file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -H \"Content-Type: application/json\" -H \"Accept: application/json\" https://api.example.com",
+            "explanation": "Multiple custom headers"
+          },
+          {
+            "command": "curl -A \"MyApp/1.0\" https://api.example.com",
+            "explanation": "Custom User-Agent"
+          },
+          {
+            "command": "curl -b \"session=abc123\" https://example.com",
+            "explanation": "Send cookies"
+          },
+          {
+            "command": "curl -c cookies.txt -b cookies.txt https://example.com",
+            "explanation": "Save and send cookies"
+          }
+        ]
+      },
+      "download": {
+        "syntax": "curl [download-options] <URL>",
+        "description": "Download files from URLs",
+        "flags": [
+          {
+            "flag": "-O, --remote-name",
+            "description": "Save with remote filename"
+          },
+          {
+            "flag": "-o, --output <file>",
+            "description": "Save to specific filename"
+          },
+          {
+            "flag": "-C, --continue-at <offset>",
+            "description": "Resume download from offset (use - for auto)"
+          },
+          {
+            "flag": "--limit-rate <speed>",
+            "description": "Limit download speed (e.g., 100K, 1M)"
+          },
+          {
+            "flag": "-#, --progress-bar",
+            "description": "Show simple progress bar"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -O https://example.com/file.zip",
+            "explanation": "Download file with original name"
+          },
+          {
+            "command": "curl -o myfile.zip https://example.com/download",
+            "explanation": "Download and rename file"
+          },
+          {
+            "command": "curl -C - -O https://example.com/largefile.iso",
+            "explanation": "Resume interrupted download"
+          },
+          {
+            "command": "curl --limit-rate 100K -O https://example.com/file.zip",
+            "explanation": "Limit download speed to 100KB/s"
+          }
+        ]
+      },
+      "verbose": {
+        "syntax": "curl [verbose-options] <URL>",
+        "description": "Debug and inspect requests/responses",
+        "flags": [
+          {
+            "flag": "-v, --verbose",
+            "description": "Show detailed request/response headers"
+          },
+          {
+            "flag": "-i, --include",
+            "description": "Include response headers in output"
+          },
+          {
+            "flag": "-I, --head",
+            "description": "Fetch headers only (HEAD request)"
+          },
+          {
+            "flag": "--trace <file>",
+            "description": "Write full trace to file"
+          },
+          {
+            "flag": "--trace-ascii <file>",
+            "description": "Write ASCII trace to file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -v https://api.example.com",
+            "explanation": "Verbose output with request/response details"
+          },
+          {
+            "command": "curl -I https://example.com",
+            "explanation": "Fetch only HTTP headers"
+          },
+          {
+            "command": "curl -i https://api.example.com/status",
+            "explanation": "Show response headers with body"
+          }
+        ]
+      },
+      "timeout": {
+        "syntax": "curl [timeout-options] <URL>",
+        "description": "Control connection and request timeouts",
+        "flags": [
+          {
+            "flag": "--connect-timeout <seconds>",
+            "description": "Max time for connection phase"
+          },
+          {
+            "flag": "-m, --max-time <seconds>",
+            "description": "Max time for entire operation"
+          },
+          {
+            "flag": "--retry <num>",
+            "description": "Retry request on transient errors"
+          },
+          {
+            "flag": "--retry-delay <seconds>",
+            "description": "Wait time between retries"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl --connect-timeout 10 https://api.example.com",
+            "explanation": "Timeout if connection takes >10 seconds"
+          },
+          {
+            "command": "curl -m 30 https://api.example.com/slow",
+            "explanation": "Timeout entire request after 30 seconds"
+          },
+          {
+            "command": "curl --retry 3 --retry-delay 2 https://api.example.com",
+            "explanation": "Retry up to 3 times with 2s delay"
+          }
+        ]
+      },
+      "proxy": {
+        "syntax": "curl [proxy-options] <URL>",
+        "description": "Use proxy servers for requests",
+        "flags": [
+          {
+            "flag": "-x, --proxy <host:port>",
+            "description": "Use HTTP proxy"
+          },
+          {
+            "flag": "--proxy-user <user:password>",
+            "description": "Proxy authentication"
+          },
+          {
+            "flag": "--noproxy <hosts>",
+            "description": "Bypass proxy for specific hosts"
+          },
+          {
+            "flag": "--socks5 <host:port>",
+            "description": "Use SOCKS5 proxy"
+          }
+        ],
+        "examples": [
+          {
+            "command": "curl -x http://proxy.example.com:8080 https://api.example.com",
+            "explanation": "Use HTTP proxy"
+          },
+          {
+            "command": "curl -x socks5://localhost:1080 https://example.com",
+            "explanation": "Use SOCKS5 proxy"
+          }
+        ]
+      }
+    }
+  }
+}

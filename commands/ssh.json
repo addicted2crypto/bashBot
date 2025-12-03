@@ -1,0 +1,382 @@
+{
+  "ssh": {
+    "description": "Secure Shell - remote login and command execution, secure file transfers, port forwarding",
+    "subcommands": {
+      "connect": {
+        "syntax": "ssh [options] user@host",
+        "description": "Connect to remote server",
+        "flags": [
+          {
+            "flag": "-p <port>",
+            "description": "Specify port (default 22)"
+          },
+          {
+            "flag": "-i <keyfile>",
+            "description": "Specify identity file (private key)"
+          },
+          {
+            "flag": "-v",
+            "description": "Verbose mode (show connection details)"
+          },
+          {
+            "flag": "-X",
+            "description": "Enable X11 forwarding"
+          },
+          {
+            "flag": "-A",
+            "description": "Enable authentication agent forwarding"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh user@example.com",
+            "explanation": "Basic SSH connection"
+          },
+          {
+            "command": "ssh -p 2222 user@example.com",
+            "explanation": "Connect on custom port"
+          },
+          {
+            "command": "ssh -i ~/.ssh/mykey.pem user@example.com",
+            "explanation": "Connect using specific private key"
+          },
+          {
+            "command": "ssh -v user@example.com",
+            "explanation": "Verbose connection (for troubleshooting)"
+          },
+          {
+            "command": "ssh user@example.com 'ls -la'",
+            "explanation": "Execute command on remote server"
+          }
+        ]
+      },
+      "keygen": {
+        "syntax": "ssh-keygen [options]",
+        "description": "Generate SSH key pairs for authentication",
+        "flags": [
+          {
+            "flag": "-t <type>",
+            "description": "Key type (rsa, ed25519, ecdsa)"
+          },
+          {
+            "flag": "-b <bits>",
+            "description": "Key size in bits (e.g., 4096 for RSA)"
+          },
+          {
+            "flag": "-C <comment>",
+            "description": "Add comment (usually email)"
+          },
+          {
+            "flag": "-f <filename>",
+            "description": "Output filename"
+          },
+          {
+            "flag": "-N <passphrase>",
+            "description": "Set passphrase (use empty string for none)"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh-keygen -t ed25519 -C \"your_email@example.com\"",
+            "explanation": "Generate modern Ed25519 key (recommended)"
+          },
+          {
+            "command": "ssh-keygen -t rsa -b 4096 -C \"your_email@example.com\"",
+            "explanation": "Generate 4096-bit RSA key"
+          },
+          {
+            "command": "ssh-keygen -t ed25519 -f ~/.ssh/mykey -N \"\"",
+            "explanation": "Generate key with specific name, no passphrase"
+          },
+          {
+            "command": "ssh-keygen -p -f ~/.ssh/id_rsa",
+            "explanation": "Change passphrase of existing key"
+          }
+        ]
+      },
+      "copy-id": {
+        "syntax": "ssh-copy-id [options] user@host",
+        "description": "Copy public key to remote server for passwordless login",
+        "flags": [
+          {
+            "flag": "-i <keyfile>",
+            "description": "Specify identity file to copy"
+          },
+          {
+            "flag": "-p <port>",
+            "description": "Specify SSH port"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh-copy-id user@example.com",
+            "explanation": "Copy default public key to server"
+          },
+          {
+            "command": "ssh-copy-id -i ~/.ssh/mykey.pub user@example.com",
+            "explanation": "Copy specific public key"
+          },
+          {
+            "command": "ssh-copy-id -i ~/.ssh/id_rsa.pub -p 2222 user@example.com",
+            "explanation": "Copy key to custom port"
+          }
+        ]
+      },
+      "config": {
+        "syntax": "Edit ~/.ssh/config",
+        "description": "Configure SSH client settings and host aliases",
+        "flags": [
+          {
+            "flag": "Host <alias>",
+            "description": "Define host alias"
+          },
+          {
+            "flag": "HostName <hostname>",
+            "description": "Real hostname or IP"
+          },
+          {
+            "flag": "User <username>",
+            "description": "Default username"
+          },
+          {
+            "flag": "Port <port>",
+            "description": "Default port"
+          },
+          {
+            "flag": "IdentityFile <path>",
+            "description": "Path to private key"
+          }
+        ],
+        "examples": [
+          {
+            "command": "Host myserver\\n  HostName example.com\\n  User john\\n  Port 2222\\n  IdentityFile ~/.ssh/mykey",
+            "explanation": "Config file entry for easy connection: ssh myserver"
+          },
+          {
+            "command": "Host *\\n  ServerAliveInterval 60\\n  ServerAliveCountMax 3",
+            "explanation": "Keep connection alive (prevents timeout)"
+          },
+          {
+            "command": "Host github.com\\n  User git\\n  IdentityFile ~/.ssh/github_key",
+            "explanation": "GitHub-specific configuration"
+          }
+        ]
+      },
+      "tunnel": {
+        "syntax": "ssh -L [local_port]:destination:remote_port user@host",
+        "description": "Port forwarding / SSH tunneling",
+        "flags": [
+          {
+            "flag": "-L <local:dest:remote>",
+            "description": "Local port forwarding"
+          },
+          {
+            "flag": "-R <remote:dest:local>",
+            "description": "Remote port forwarding"
+          },
+          {
+            "flag": "-D <port>",
+            "description": "Dynamic port forwarding (SOCKS proxy)"
+          },
+          {
+            "flag": "-N",
+            "description": "No command execution (just forwarding)"
+          },
+          {
+            "flag": "-f",
+            "description": "Background mode"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh -L 8080:localhost:80 user@example.com",
+            "explanation": "Forward local port 8080 to remote port 80"
+          },
+          {
+            "command": "ssh -L 5432:database.internal:5432 user@jumphost.com",
+            "explanation": "Access internal database through jump host"
+          },
+          {
+            "command": "ssh -D 8080 user@example.com",
+            "explanation": "Create SOCKS proxy on port 8080"
+          },
+          {
+            "command": "ssh -N -L 3000:localhost:3000 user@example.com",
+            "explanation": "Port forward only (no shell)"
+          },
+          {
+            "command": "ssh -f -N -L 8080:localhost:80 user@example.com",
+            "explanation": "Port forward in background"
+          }
+        ]
+      },
+      "scp": {
+        "syntax": "scp [options] source destination",
+        "description": "Secure copy files between hosts",
+        "flags": [
+          {
+            "flag": "-r",
+            "description": "Recursively copy directories"
+          },
+          {
+            "flag": "-P <port>",
+            "description": "Specify port (note: capital P)"
+          },
+          {
+            "flag": "-i <keyfile>",
+            "description": "Specify identity file"
+          },
+          {
+            "flag": "-C",
+            "description": "Enable compression"
+          }
+        ],
+        "examples": [
+          {
+            "command": "scp file.txt user@example.com:/path/to/destination/",
+            "explanation": "Copy local file to remote server"
+          },
+          {
+            "command": "scp user@example.com:/path/to/file.txt ./",
+            "explanation": "Copy remote file to local directory"
+          },
+          {
+            "command": "scp -r folder/ user@example.com:/path/to/destination/",
+            "explanation": "Copy directory recursively"
+          },
+          {
+            "command": "scp -P 2222 file.txt user@example.com:/path/",
+            "explanation": "Copy using custom port"
+          },
+          {
+            "command": "scp user1@host1:/file user2@host2:/path/",
+            "explanation": "Copy between two remote hosts"
+          }
+        ]
+      },
+      "agent": {
+        "syntax": "ssh-agent / ssh-add",
+        "description": "Manage SSH keys with authentication agent",
+        "flags": [
+          {
+            "flag": "ssh-agent bash",
+            "description": "Start agent in bash"
+          },
+          {
+            "flag": "ssh-add <keyfile>",
+            "description": "Add key to agent"
+          },
+          {
+            "flag": "ssh-add -l",
+            "description": "List keys in agent"
+          },
+          {
+            "flag": "ssh-add -D",
+            "description": "Remove all keys from agent"
+          }
+        ],
+        "examples": [
+          {
+            "command": "eval $(ssh-agent)",
+            "explanation": "Start SSH agent"
+          },
+          {
+            "command": "ssh-add ~/.ssh/id_ed25519",
+            "explanation": "Add key to agent (prompts for passphrase once)"
+          },
+          {
+            "command": "ssh-add -l",
+            "explanation": "List currently loaded keys"
+          },
+          {
+            "command": "ssh-add -t 3600 ~/.ssh/id_rsa",
+            "explanation": "Add key for 1 hour only"
+          }
+        ]
+      },
+      "jump": {
+        "syntax": "ssh -J jumphost user@destination",
+        "description": "Connect through jump host (bastion)",
+        "flags": [
+          {
+            "flag": "-J <host>",
+            "description": "Jump through host"
+          },
+          {
+            "flag": "ProxyJump",
+            "description": "Config file directive for jump host"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh -J user@jumphost.com user@internal-server.com",
+            "explanation": "Connect through jump host"
+          },
+          {
+            "command": "ssh -J jump1,jump2 user@final-destination",
+            "explanation": "Connect through multiple jump hosts"
+          },
+          {
+            "command": "Host internal\\n  HostName 10.0.1.5\\n  ProxyJump jumphost.com",
+            "explanation": "Config file jump host setup"
+          }
+        ]
+      },
+      "known-hosts": {
+        "syntax": "ssh-keygen -R hostname",
+        "description": "Manage known hosts file",
+        "flags": [
+          {
+            "flag": "-R <hostname>",
+            "description": "Remove host from known_hosts"
+          },
+          {
+            "flag": "-H",
+            "description": "Hash known_hosts file"
+          }
+        ],
+        "examples": [
+          {
+            "command": "ssh-keygen -R example.com",
+            "explanation": "Remove host key (fix changed host key warning)"
+          },
+          {
+            "command": "ssh-keygen -R 192.168.1.100",
+            "explanation": "Remove host by IP address"
+          },
+          {
+            "command": "ssh-keygen -H",
+            "explanation": "Hash all hostnames in known_hosts"
+          }
+        ]
+      },
+      "permissions": {
+        "syntax": "chmod <permissions> <file>",
+        "description": "Fix SSH key file permissions",
+        "flags": [],
+        "examples": [
+          {
+            "command": "chmod 700 ~/.ssh",
+            "explanation": "Set correct .ssh directory permissions"
+          },
+          {
+            "command": "chmod 600 ~/.ssh/id_rsa",
+            "explanation": "Set correct private key permissions"
+          },
+          {
+            "command": "chmod 644 ~/.ssh/id_rsa.pub",
+            "explanation": "Set correct public key permissions"
+          },
+          {
+            "command": "chmod 600 ~/.ssh/authorized_keys",
+            "explanation": "Set correct authorized_keys permissions"
+          },
+          {
+            "command": "chmod 600 ~/.ssh/config",
+            "explanation": "Set correct config file permissions"
+          }
+        ]
+      }
+    }
+  }
+}
