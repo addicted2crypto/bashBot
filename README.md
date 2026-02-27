@@ -1,10 +1,10 @@
-# BashBot - Interactive Bash Command Helper 🤖
+# BashBot - Interactive Bash Command Helper 
 
 BashBot is an interactive CLI tool that provides instant explanations, syntax help, and practical examples for common bash and development commands. Never forget command syntax again!
 
-## Features ✨
+## Features 
 
-- **📚 Comprehensive Command Database**: Pre-loaded with 172+ commands across 10 categories:
+- ** Comprehensive Command Database**: Pre-loaded with 172+ commands across 10 categories:
   - **Development**: `git`, `npm`, `pip`, `docker`, `pytest`
   - **Python**: `venv` (create, activate, deactivate, install, freeze, troubleshoot)
   - **Localhost**: `localhost` (kill dev servers, find ports, manage local projects)
